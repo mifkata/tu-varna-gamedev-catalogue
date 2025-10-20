@@ -1,3 +1,21 @@
+interface DbConfig {
+  type?: 'postgres';
+  synchronize?: boolean;
+  logging?: boolean;
+}
+
+interface DbConfigSeparate extends DbConfig {
+  host?: string;
+  port?: number;
+  username?: string;
+  password?: string;
+  database?: string;
+}
+
+interface DbConfigUrl extends DbConfig {
+  url?: string;
+}
+
 export interface IAppConfig {
   env: string;
   fastify: {
@@ -9,15 +27,5 @@ export interface IAppConfig {
     loadFrontend?: boolean;
     startListening?: boolean;
   };
-  database: {
-    type?: 'postgres';
-    host?: string;
-    port?: number;
-    username?: string;
-    password?: string;
-    database?: string;
-    url?: string;
-    synchronize?: boolean;
-    logging?: boolean;
-  };
+  database: DbConfigSeparate | DbConfigUrl;
 }
