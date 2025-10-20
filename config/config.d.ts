@@ -26,6 +26,11 @@ export interface IAppConfig {
     apiPrefix?: string;
     loadFrontend?: boolean;
     startListening?: boolean;
+    paths?: {
+      root?: string;
+      frontend?: string;
+      backend?: string;
+    };
   };
   database: DbConfigSeparate | DbConfigUrl;
 }

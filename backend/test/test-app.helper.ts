@@ -1,13 +1,12 @@
-import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import supertest from 'supertest';
 
-import { AppBootstrap } from '@backend/app.bootstrap';
+import { AppRunner } from '@backend/lib/app.runner';
 
 export type TestAgent = ReturnType<typeof supertest>;
 
 export class TestAppHelper {
   private static _agent: TestAgent | null;
-  private static app: NestFastifyApplication | null = null;
+  private static app: AppRunner | null = null;
 
   private static set agent(value: TestAgent | null) {
     this._agent = value;
@@ -19,15 +18,15 @@ export class TestAppHelper {
 
   public static async tearUp(): Promise<TestAgent> {
     if (!this.agent) {
-      this.app = (await AppBootstrap.bootstrap()).app;
-      this.agent = supertest(this.app.getHttpServer());
+      this.app = await AppRunner.run();
+      this.agent = supertest(this.app.backend.app.getHttpServer());
     }
 
     return this.agent;
   }
 
   public static async tearDown(): Promise<void> {
-    await this.app?.close();
+    await this.app?.shutdown();
 
     this.agent = null;
     this.app = null;

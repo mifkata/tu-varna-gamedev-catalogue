@@ -1,5 +1,4 @@
 import 'reflect-metadata';
+import { AppRunner } from './lib/app.runner';
 
-import { AppBootstrap } from './app.bootstrap';
-
-void AppBootstrap.bootstrap();
+void AppRunner.run();
