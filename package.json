@@ -18,10 +18,10 @@
     "test": "NODE_ENV=test jest",
     "test:watch": "pnpm test --watch",
     "test:cover": "pnpm test --coverage",
-    "prettier": "prettier \"{backend,frontend}/**/*.{ts,tsx,json,css}\"",
+    "prettier": "prettier \"{backend,frontend,migrations}/**/*.{ts,tsx,json,css}\"",
     "prettier:fix": "pnpm prettier --write",
     "prettier:lint": "pnpm prettier --check",
-    "eslint:lint": "eslint \"{backend,frontend}/**/*.{ts,tsx}\"",
+    "eslint:lint": "eslint \"{backend,frontend,migrations}/**/*.{ts,tsx}\"",
     "eslint:fix": "pnpm eslint:lint --fix",
     "lint": "pnpm eslint:lint && pnpm prettier:lint",
     "lint:fix": "pnpm eslint:fix && pnpm prettier:fix"
