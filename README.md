@@ -54,7 +54,21 @@ Apply database migrations:
 pnpm migration:run
 ```
 
-### 5. Start Development Server
+### 5. Seed Database (Optional)
+
+Populate the database with sample data:
+
+```bash
+pnpm seed
+```
+
+This seeds the database with realistic game catalogue data including:
+- **10 Game Developers**: CD Projekt Red, Rockstar Games, Valve, FromSoftware, Bethesda, Nintendo, Blizzard, Ubisoft, EA, Naughty Dog
+- **9 Categories**: RPG, Action-Adventure, Shooter, Souls-like, Open World, Puzzle, MOBA, Strategy, Sports
+- **30 Games**: Including classics like Half-Life (1998) and modern titles like Elden Ring (2022)
+- **Inventory Records**: With realistic pricing in EUR and stock levels
+
+### 6. Start Development Server
 
 ```bash
 pnpm start:dev
@@ -90,11 +104,14 @@ The application will be available at:
 | `pnpm migration:generate <name>` | Generate a new migration based on entity changes |
 | `pnpm migration:run` | Run pending migrations |
 | `pnpm migration:revert` | Revert the last migration |
+| `pnpm seed` | Populate database with sample game catalogue data |
 
 **Example:**
 ```bash
 pnpm migration:generate migrations/AddUserTable
 ```
+
+**Note on seeding:** The `pnpm seed` command will clear existing data and populate the database with 30 games from 10 major developers, along with categories and inventory records. Use this for development and testing purposes.
 
 ### Testing
 
@@ -119,7 +136,11 @@ pnpm migration:generate migrations/AddUserTable
 
 ```
 .
-├── backend/           # NestJS backend application
+├── backend/
+│   ├── entities/      # TypeORM database entities
+│   ├── seeds/         # Database seed files
+│   ├── controllers/   # API route controllers
+│   └── ...
 ├── frontend/          # Next.js frontend application
 ├── config/            # Configuration files (see config/README.md)
 ├── migrations/        # TypeORM database migrations
@@ -202,6 +223,7 @@ docker-compose logs postgres
 docker-compose down -v
 docker-compose up -d
 pnpm migration:run
+pnpm seed  # Optional: reseed with sample data
 ```
 
 **Check migration status:**
@@ -260,7 +282,7 @@ npm install -g pnpm@latest
 
 ### Database Schema Changes
 
-1. Modify TypeORM entities in `backend/`
+1. Modify TypeORM entities in `backend/entities/`
 2. Generate migration:
    ```bash
    pnpm migration:generate migrations/DescriptiveChangeName
@@ -269,6 +291,11 @@ npm install -g pnpm@latest
 4. Apply migration:
    ```bash
    pnpm migration:run
+   ```
+5. Update seed data in `backend/seeds/seed.ts` if needed
+6. Reseed database (optional):
+   ```bash
+   pnpm seed
    ```
 
 ## Production Deployment
@@ -294,7 +321,9 @@ npm install -g pnpm@latest
    pnpm start:prod
    ```
 
-**Important:** Never use `synchronize: true` in production. Always use migrations.
+**Important:**
+- Never use `synchronize: true` in production. Always use migrations.
+- **Do not** run `pnpm seed` in production - seed data is for development/testing only.
 
 ## License
 
