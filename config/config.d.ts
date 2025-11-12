@@ -2,6 +2,7 @@ interface DbConfig {
   type?: 'postgres';
   synchronize?: boolean;
   logging?: boolean;
+  entities?: string[];
 }
 
 interface DbConfigSeparate extends DbConfig {

@@ -24,6 +24,7 @@ const config: IAppConfig = {
     type: 'postgres',
     synchronize: false,
     logging: false,
+    entities: [path.join(root, 'backend', '**', '*.entity{.ts,.js}')],
   },
 };
 
