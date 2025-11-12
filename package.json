@@ -15,6 +15,7 @@
     "migration:generate": "pnpm typeorm migration:generate -d backend/data-source.ts",
     "migration:run": "pnpm typeorm migration:run -d backend/data-source.ts",
     "migration:revert": "pnpm typeorm migration:revert -d backend/data-source.ts",
+    "seed": "ts-node backend/seeds/seed.ts",
     "test": "NODE_ENV=test jest",
     "test:watch": "pnpm test --watch",
     "test:cover": "pnpm test --coverage",
