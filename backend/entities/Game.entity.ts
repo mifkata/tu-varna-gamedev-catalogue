@@ -29,22 +29,33 @@ export class Game {
   @Column({ type: 'varchar', nullable: false })
   name: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
+  @Column({
+    name: 'min_cpu',
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    nullable: false,
+  })
   minCpu: number;
 
-  @Column({ type: 'integer', nullable: false })
+  @Column({ name: 'min_memory', type: 'integer', nullable: false })
   minMemory: number;
 
   @Column({ type: 'boolean', nullable: false, default: false })
   multiplayer: boolean;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date;
 
   @UpdateDateColumn({
+    name: 'updated_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  updated_at: Date;
+  updatedAt: Date;
 }
