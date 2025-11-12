@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { Game } from './Game.entity';
 
 @Entity('categories')
 export class Category {
@@ -13,6 +16,9 @@ export class Category {
 
   @Column({ type: 'varchar', nullable: false })
   name: string;
+
+  @OneToMany(() => Game, (game) => game.category)
+  games: Game[];
 
   @CreateDateColumn({
     name: 'created_at',

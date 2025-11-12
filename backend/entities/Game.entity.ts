@@ -7,10 +7,12 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  OneToOne,
 } from 'typeorm';
 
 import { Category } from './Category.entity';
 import { GameDeveloper } from './GameDeveloper.entity';
+import { Inventory } from './Inventory.entity';
 
 @Entity('games')
 @Unique(['developer', 'name'])
@@ -43,6 +45,9 @@ export class Game {
 
   @Column({ type: 'boolean', nullable: false, default: false })
   multiplayer: boolean;
+
+  @OneToOne(() => Inventory, (inventory) => inventory.game)
+  inventory: Inventory;
 
   @CreateDateColumn({
     name: 'created_at',
