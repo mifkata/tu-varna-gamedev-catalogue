@@ -46,6 +46,9 @@ export class Game {
   @Column({ type: 'boolean', nullable: false, default: false })
   multiplayer: boolean;
 
+  @Column({ name: 'release_year', type: 'integer', nullable: false })
+  releaseYear: number;
+
   @OneToOne(() => Inventory, (inventory) => inventory.game)
   inventory: Inventory;
 

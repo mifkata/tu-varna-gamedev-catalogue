@@ -119,6 +119,7 @@ class DatabaseSeeder {
       minCpu: 3.3,
       minMemory: 8192,
       multiplayer: false,
+      releaseYear: 2015,
     });
 
     this.games.cyberpunk = await gameRepo.save({
@@ -128,6 +129,7 @@ class DatabaseSeeder {
       minCpu: 3.2,
       minMemory: 8192,
       multiplayer: false,
+      releaseYear: 2020,
     });
 
     // Rockstar Games
@@ -138,6 +140,7 @@ class DatabaseSeeder {
       minCpu: 2.4,
       minMemory: 4096,
       multiplayer: true,
+      releaseYear: 2013,
     });
 
     this.games.rdr2 = await gameRepo.save({
@@ -147,6 +150,7 @@ class DatabaseSeeder {
       minCpu: 2.8,
       minMemory: 8192,
       multiplayer: true,
+      releaseYear: 2018,
     });
 
     // Valve games
@@ -157,6 +161,7 @@ class DatabaseSeeder {
       minCpu: 3.0,
       minMemory: 12288,
       multiplayer: false,
+      releaseYear: 2020,
     });
 
     this.games.portal2 = await gameRepo.save({
@@ -166,6 +171,7 @@ class DatabaseSeeder {
       minCpu: 3.0,
       minMemory: 2048,
       multiplayer: true,
+      releaseYear: 2011,
     });
 
     this.games.counterStrike2 = await gameRepo.save({
@@ -175,6 +181,7 @@ class DatabaseSeeder {
       minCpu: 3.0,
       minMemory: 8192,
       multiplayer: true,
+      releaseYear: 2023,
     });
 
     // Classic Valve games
@@ -185,6 +192,7 @@ class DatabaseSeeder {
       minCpu: 0.5,
       minMemory: 512,
       multiplayer: false,
+      releaseYear: 1998,
     });
 
     this.games.counterStrike16 = await gameRepo.save({
@@ -194,6 +202,7 @@ class DatabaseSeeder {
       minCpu: 0.5,
       minMemory: 512,
       multiplayer: true,
+      releaseYear: 2000,
     });
 
     this.games.portal = await gameRepo.save({
@@ -203,6 +212,7 @@ class DatabaseSeeder {
       minCpu: 1.7,
       minMemory: 512,
       multiplayer: false,
+      releaseYear: 2007,
     });
 
     // FromSoftware games
@@ -213,6 +223,7 @@ class DatabaseSeeder {
       minCpu: 3.3,
       minMemory: 12288,
       multiplayer: true,
+      releaseYear: 2022,
     });
 
     this.games.darkSouls3 = await gameRepo.save({
@@ -222,6 +233,7 @@ class DatabaseSeeder {
       minCpu: 3.1,
       minMemory: 8192,
       multiplayer: true,
+      releaseYear: 2016,
     });
 
     this.games.sekiro = await gameRepo.save({
@@ -231,6 +243,7 @@ class DatabaseSeeder {
       minCpu: 3.0,
       minMemory: 8192,
       multiplayer: false,
+      releaseYear: 2019,
     });
 
     // Bethesda games
@@ -241,6 +254,7 @@ class DatabaseSeeder {
       minCpu: 2.0,
       minMemory: 4096,
       multiplayer: false,
+      releaseYear: 2011,
     });
 
     this.games.fallout4 = await gameRepo.save({
@@ -250,6 +264,7 @@ class DatabaseSeeder {
       minCpu: 2.8,
       minMemory: 8192,
       multiplayer: false,
+      releaseYear: 2015,
     });
 
     this.games.morrowind = await gameRepo.save({
@@ -259,6 +274,7 @@ class DatabaseSeeder {
       minCpu: 0.5,
       minMemory: 256,
       multiplayer: false,
+      releaseYear: 2002,
     });
 
     // Nintendo games
@@ -269,6 +285,7 @@ class DatabaseSeeder {
       minCpu: 1.02,
       minMemory: 4096,
       multiplayer: false,
+      releaseYear: 2017,
     });
 
     // Blizzard games
@@ -279,6 +296,7 @@ class DatabaseSeeder {
       minCpu: 2.5,
       minMemory: 6144,
       multiplayer: true,
+      releaseYear: 2022,
     });
 
     this.games.diablo4 = await gameRepo.save({
@@ -288,6 +306,7 @@ class DatabaseSeeder {
       minCpu: 2.5,
       minMemory: 8192,
       multiplayer: true,
+      releaseYear: 2023,
     });
 
     this.games.wow = await gameRepo.save({
@@ -297,6 +316,7 @@ class DatabaseSeeder {
       minCpu: 2.7,
       minMemory: 8192,
       multiplayer: true,
+      releaseYear: 2004,
     });
 
     this.games.starcraft2 = await gameRepo.save({
@@ -306,6 +326,7 @@ class DatabaseSeeder {
       minCpu: 2.6,
       minMemory: 4096,
       multiplayer: true,
+      releaseYear: 2010,
     });
 
     // Classic Blizzard games
@@ -316,6 +337,7 @@ class DatabaseSeeder {
       minCpu: 0.09,
       minMemory: 128,
       multiplayer: true,
+      releaseYear: 1998,
     });
 
     this.games.warcraft3 = await gameRepo.save({
@@ -325,6 +347,7 @@ class DatabaseSeeder {
       minCpu: 0.4,
       minMemory: 256,
       multiplayer: true,
+      releaseYear: 2002,
     });
 
     this.games.diablo2 = await gameRepo.save({
@@ -334,6 +357,7 @@ class DatabaseSeeder {
       minCpu: 0.233,
       minMemory: 256,
       multiplayer: true,
+      releaseYear: 2000,
     });
 
     // Ubisoft games
@@ -344,6 +368,7 @@ class DatabaseSeeder {
       minCpu: 3.0,
       minMemory: 8192,
       multiplayer: false,
+      releaseYear: 2020,
     });
 
     this.games.farcry6 = await gameRepo.save({
@@ -353,6 +378,7 @@ class DatabaseSeeder {
       minCpu: 3.2,
       minMemory: 8192,
       multiplayer: true,
+      releaseYear: 2021,
     });
 
     // EA games
@@ -363,6 +389,7 @@ class DatabaseSeeder {
       minCpu: 3.1,
       minMemory: 8192,
       multiplayer: true,
+      releaseYear: 2023,
     });
 
     this.games.apexLegends = await gameRepo.save({
@@ -372,6 +399,7 @@ class DatabaseSeeder {
       minCpu: 3.0,
       minMemory: 6144,
       multiplayer: true,
+      releaseYear: 2019,
     });
 
     // Naughty Dog games
@@ -382,6 +410,7 @@ class DatabaseSeeder {
       minCpu: 3.5,
       minMemory: 16384,
       multiplayer: false,
+      releaseYear: 2022,
     });
 
     this.games.uncharted4 = await gameRepo.save({
@@ -391,6 +420,7 @@ class DatabaseSeeder {
       minCpu: 3.5,
       minMemory: 8192,
       multiplayer: true,
+      releaseYear: 2016,
     });
 
     console.log(`✓ ${Object.keys(this.games).length} games seeded`);
