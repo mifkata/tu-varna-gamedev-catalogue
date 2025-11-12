@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import '@fastify/swagger';
 
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
@@ -30,6 +31,31 @@ export class BackendBootstrap {
 
     // Enable CORS if needed
     this.app.enableCors();
+
+    // Register Fastify Swagger
+    // const fastifyInstance = this.app.getHttpAdapter().getInstance();
+    // const fastifySwagger = await import('@fastify/swagger');
+    // const fastifySwaggerUi = await import('@fastify/swagger-ui');
+
+    // await fastifyInstance.register(fastifySwagger.default as any, {
+    //   openapi: {
+    //     info: {
+    //       title: 'Game Developer Catalogue API',
+    //       description: 'API for managing game developers, games, and inventory',
+    //       version: '1.0.0',
+    //     },
+    //     tags: [
+    //       { name: 'game-developers', description: 'Game developer operations' },
+    //     ],
+    //   },
+    //   transform: ({ schema, url }) => {
+    //     return { schema, url: `/api${url}` };
+    //   },
+    // });
+
+    // await fastifyInstance.register(fastifySwaggerUi.default as any, {
+    //   routePrefix: '/api/docs',
+    // });
 
     await this.app.init();
     await this.app.getHttpAdapter().getInstance().ready();
