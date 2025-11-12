@@ -1,54 +1,69 @@
-export const createGameDeveloperSchema = {
-  type: 'object',
-  required: ['name'],
-  properties: {
-    name: {
-      type: 'string',
+import { Type, Static } from '@sinclair/typebox';
+
+// Params schemas
+export const uuidParamSchema = Type.Object(
+  {
+    id: Type.String({
+      format: 'uuid',
+      description: 'UUID parameter',
+    }),
+  },
+  { $id: 'UuidParam' },
+);
+
+// Request schemas
+export const createGameDeveloperSchema = Type.Object(
+  {
+    name: Type.String({
       minLength: 1,
       maxLength: 255,
       description: 'The name of the game developer',
-    },
+    }),
   },
-} as const;
+  { $id: 'CreateGameDeveloper' },
+);
 
-export const updateGameDeveloperSchema = {
-  type: 'object',
-  properties: {
-    name: {
-      type: 'string',
-      minLength: 1,
-      maxLength: 255,
-      description: 'The name of the game developer',
-    },
+export const updateGameDeveloperSchema = Type.Object(
+  {
+    name: Type.Optional(
+      Type.String({
+        minLength: 1,
+        maxLength: 255,
+        description: 'The name of the game developer',
+      }),
+    ),
   },
-} as const;
+  { $id: 'UpdateGameDeveloper' },
+);
 
-export const gameDeveloperResponseSchema = {
-  type: 'object',
-  properties: {
-    id: {
-      type: 'string',
+// Response schemas
+export const gameDeveloperResponseSchema = Type.Object(
+  {
+    id: Type.String({
       format: 'uuid',
       description: 'The unique identifier',
-    },
-    name: {
-      type: 'string',
+    }),
+    name: Type.String({
       description: 'The name of the game developer',
-    },
-    createdAt: {
-      type: 'string',
+    }),
+    createdAt: Type.String({
       format: 'date-time',
       description: 'Creation timestamp',
-    },
-    updatedAt: {
-      type: 'string',
+    }),
+    updatedAt: Type.String({
       format: 'date-time',
       description: 'Last update timestamp',
-    },
+    }),
   },
-} as const;
+  { $id: 'GameDeveloperResponse' },
+);
 
-export const gameDeveloperListResponseSchema = {
-  type: 'array',
-  items: gameDeveloperResponseSchema,
-} as const;
+export const gameDeveloperListResponseSchema = Type.Array(gameDeveloperResponseSchema, {
+  $id: 'GameDeveloperList',
+});
+
+// Export TypeScript types
+export type UuidParam = Static<typeof uuidParamSchema>;
+export type CreateGameDeveloperDto = Static<typeof createGameDeveloperSchema>;
+export type UpdateGameDeveloperDto = Static<typeof updateGameDeveloperSchema>;
+export type GameDeveloperResponse = Static<typeof gameDeveloperResponseSchema>;

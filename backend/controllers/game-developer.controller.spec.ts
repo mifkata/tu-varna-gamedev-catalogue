@@ -1,3 +1,4 @@
+import { GameDeveloperResponse } from '@backend/schemas/game-developer.schema';
 import { TestAgent, TestAppHelper } from '@backend/test/test-app.helper';
 
 describe('/api/game-developers', () => {
@@ -15,14 +16,15 @@ describe('/api/game-developers', () => {
         .send({ name: 'Test Developer' })
         .expect(201);
 
-      expect(response.body).toMatchObject({
+      const body = response.body as GameDeveloperResponse;
+      expect(body).toMatchObject({
         id: expect.any(String),
         name: 'Test Developer',
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       });
 
-      createdDeveloperId = response.body.id;
+      createdDeveloperId = body.id;
     });
 
     it('should return 400 when name is missing', async () => {
@@ -34,9 +36,10 @@ describe('/api/game-developers', () => {
     it('should return an array of game developers', async () => {
       const response = await request.get('/api/game-developers').expect(200);
 
-      expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body.length).toBeGreaterThan(0);
-      expect(response.body[0]).toMatchObject({
+      const body = response.body as GameDeveloperResponse[];
+      expect(Array.isArray(body)).toBe(true);
+      expect(body.length).toBeGreaterThan(0);
+      expect(body[0]).toMatchObject({
         id: expect.any(String),
         name: expect.any(String),
         createdAt: expect.any(String),
@@ -49,7 +52,8 @@ describe('/api/game-developers', () => {
     it('should return a game developer by id', async () => {
       const response = await request.get(`/api/game-developers/${createdDeveloperId}`).expect(200);
 
-      expect(response.body).toMatchObject({
+      const body = response.body as GameDeveloperResponse;
+      expect(body).toMatchObject({
         id: createdDeveloperId,
         name: 'Test Developer',
         createdAt: expect.any(String),
@@ -69,7 +73,8 @@ describe('/api/game-developers', () => {
         .send({ name: 'Updated Developer' })
         .expect(200);
 
-      expect(response.body).toMatchObject({
+      const body = response.body as GameDeveloperResponse;
+      expect(body).toMatchObject({
         id: createdDeveloperId,
         name: 'Updated Developer',
         createdAt: expect.any(String),

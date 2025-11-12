@@ -18,19 +18,16 @@ import { Repository } from 'typeorm';
 
 import { GameDeveloper } from '../entities/GameDeveloper.entity';
 import {
+  uuidParamSchema,
   createGameDeveloperSchema,
   updateGameDeveloperSchema,
   gameDeveloperResponseSchema,
   gameDeveloperListResponseSchema,
 } from '../schemas/game-developer.schema';
-
-interface CreateGameDeveloperDto {
-  name: string;
-}
-
-interface UpdateGameDeveloperDto {
-  name?: string;
-}
+import type {
+  CreateGameDeveloperDto,
+  UpdateGameDeveloperDto,
+} from '../schemas/game-developer.schema';
 
 @Controller('game-developers')
 export class GameDeveloperController {
@@ -65,12 +62,7 @@ export class GameDeveloperController {
 
   @Get(':id')
   @RouteSchema({
-    params: {
-      type: 'object',
-      properties: {
-        id: { type: 'string', format: 'uuid' },
-      },
-    },
+    params: uuidParamSchema,
     response: {
       200: gameDeveloperResponseSchema,
     },
@@ -89,12 +81,7 @@ export class GameDeveloperController {
 
   @Patch(':id')
   @RouteSchema({
-    params: {
-      type: 'object',
-      properties: {
-        id: { type: 'string', format: 'uuid' },
-      },
-    },
+    params: uuidParamSchema,
     body: updateGameDeveloperSchema,
     response: {
       200: gameDeveloperResponseSchema,
@@ -116,12 +103,7 @@ export class GameDeveloperController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @RouteSchema({
-    params: {
-      type: 'object',
-      properties: {
-        id: { type: 'string', format: 'uuid' },
-      },
-    },
+    params: uuidParamSchema,
   })
   async remove(@Param('id') id: string) {
     const gameDeveloper = await this.gameDeveloperRepository.findOne({
