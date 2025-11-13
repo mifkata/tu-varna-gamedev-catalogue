@@ -5,9 +5,18 @@
     "rootDir": "..",
     "baseUrl": ".",
     "paths": {
-      "@backend/*": ["./*"]
+      "@backend/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["./**/*"],
-  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"]
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

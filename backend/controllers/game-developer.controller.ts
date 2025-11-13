@@ -12,10 +12,10 @@ import {
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common';
-import { RouteSchema } from '@nestjs/platform-fastify/decorators';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { RouteSchema } from '../decorators/route-schema.decorator';
 import { GameDeveloper } from '../entities/GameDeveloper.entity';
 import {
   uuidParamSchema,
@@ -38,6 +38,7 @@ export class GameDeveloperController {
 
   @Post()
   @RouteSchema({
+    tags: ['Game Developers'],
     body: createGameDeveloperSchema,
     response: {
       201: gameDeveloperResponseSchema,
@@ -50,6 +51,7 @@ export class GameDeveloperController {
 
   @Get()
   @RouteSchema({
+    tags: ['Game Developers'],
     response: {
       200: gameDeveloperListResponseSchema,
     },
@@ -62,6 +64,7 @@ export class GameDeveloperController {
 
   @Get(':id')
   @RouteSchema({
+    tags: ['Game Developers'],
     params: uuidParamSchema,
     response: {
       200: gameDeveloperResponseSchema,
@@ -81,6 +84,7 @@ export class GameDeveloperController {
 
   @Patch(':id')
   @RouteSchema({
+    tags: ['Game Developers'],
     params: uuidParamSchema,
     body: updateGameDeveloperSchema,
     response: {
@@ -103,6 +107,7 @@ export class GameDeveloperController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @RouteSchema({
+    tags: ['Game Developers'],
     params: uuidParamSchema,
   })
   async remove(@Param('id') id: string) {

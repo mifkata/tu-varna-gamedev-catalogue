@@ -32,39 +32,41 @@ export class BackendBootstrap {
     // Enable CORS if needed
     this.app.enableCors();
 
-    // Register Fastify Swagger
-    // const fastifyInstance = this.app.getHttpAdapter().getInstance();
-    // const fastifySwagger = await import('@fastify/swagger');
-    // const fastifySwaggerUi = await import('@fastify/swagger-ui');
-
-    // await fastifyInstance.register(fastifySwagger.default as any, {
-    //   openapi: {
-    //     info: {
-    //       title: 'Game Developer Catalogue API',
-    //       description: 'API for managing game developers, games, and inventory',
-    //       version: '1.0.0',
-    //     },
-    //     tags: [
-    //       { name: 'game-developers', description: 'Game developer operations' },
-    //     ],
-    //   },
-    //   transform: ({ schema, url }) => {
-    //     return { schema, url: `/api${url}` };
-    //   },
-    // });
-
-    // await fastifyInstance.register(fastifySwaggerUi.default as any, {
-    //   routePrefix: '/api/docs',
-    // });
+    // Register Fastify Swagger documentation UI
+    if (this.env !== 'test') {
+      await this.registerSwagger();
+    }
 
     await this.app.init();
-    await this.app.getHttpAdapter().getInstance().ready();
 
     this.logger.info('NestJS application initialized');
   }
 
+  private async registerSwagger(): Promise<void> {
+    const fastify = this.app.getHttpAdapter().getInstance();
+    const swagger = (await import('@fastify/swagger')).default;
+    const swaggerUI = (await import('@fastify/swagger-ui')).default;
+
+    await fastify.register(swagger as any, {
+      openapi: {
+        info: {
+          title: 'Game Developer Catalogue API',
+          description: 'API for managing game developers, games, and inventory',
+          version: '1.0.0',
+        },
+        tags: [{ name: 'Game Developers', description: 'Game developer operations' }],
+      },
+    });
+
+    await fastify.register(swaggerUI as any, {
+      routePrefix: '/api/docs',
+    });
+  }
+
   public async listen(host = '0.0.0.0'): Promise<void> {
     await this.app.listen(this.port, host);
+    await this.app.getHttpAdapter().getInstance().ready();
+
     this.logger.info(`Application is running on: http://localhost:${this.port}`);
     this.logger.info(`Environment: ${this.env}`);
   }

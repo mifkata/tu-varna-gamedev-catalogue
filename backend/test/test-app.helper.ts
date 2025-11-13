@@ -19,6 +19,7 @@ export class TestAppHelper {
   public static async tearUp(): Promise<TestAgent> {
     if (!this.agent) {
       this.app = await AppRunner.run();
+      await this.app.backend.app.getHttpAdapter().getInstance().ready();
       this.agent = supertest(this.app.backend.app.getHttpServer());
     }
 
