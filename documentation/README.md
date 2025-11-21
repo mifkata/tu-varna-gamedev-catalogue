@@ -8,8 +8,9 @@
 ## Съдържание
 - [Quick Start](#quick-start)
 - [Описание на проекта](#описание-на-проекта)
-- [Технологичен стек](#технологичен-стек)
+- [Използвани технологии](#използвани-технологии)
 - [Архитектура](#архитектура)
+- [Обектно-ориентирана структура (Backend)](#обектно-ориентирана-структура-backend)
 - [Подготовка на средата](#подготовка-на-средата)
 - [Пускане на приложението](#пускане-на-приложението)
 - [Работа с базата данни](#работа-с-базата-данни)
@@ -116,6 +117,360 @@ tu-varna-gamedev-catalogue/
 ```
 
 Проектът използва **monorepository подход** където `backend` и `frontend` споделят `dependencies` и са част от един проект.
+
+---
+
+## Обектно-ориентирана структура (Backend)
+
+Проектът използва принципите на ООП (Обектно-ориентирано програмиране) за организация на кода. Backend частта е структурирана в следните типове класове:
+
+### 1. Entity класове (Data Models)
+
+Entity класовете представляват модели за данни и са анотирани с TypeORM декоратори за връзка с базата данни.
+
+#### `Category` класа
+```typescript
+@Entity('categories')
+export class Category {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'varchar', nullable: false })
+  name: string;
+
+  @OneToMany(() => Game, (game) => game.category)
+  games: Game[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+```
+
+**Отговорности:**
+- Представя категория за игри в системата
+- Съдържа релация One-to-Many към Игри модела
+- Автоматично управление на timestamps (createdAt, updatedAt)
+
+**ООП принципи:**
+- **Енкапсулация**: Данните са организирани в клас със свойства
+- **Наследяване**: Имплицитно наследява TypeORM Entity функционалност
+- **Декоратори**: Използва TypeORM декоратори за метаданни (@Entity, @Column, etc.)
+
+#### `GameDeveloper` класа
+```typescript
+@Entity('game_developers')
+export class GameDeveloper {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'varchar', nullable: false, unique: true })
+  name: string;
+
+  @OneToMany(() => Game, (game) => game.developer)
+  games: Game[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+```
+
+**Отговорности:**
+- Представя Разработчик на игри
+- Съдържа релация One-to-Many към Игри модела
+- Уникално имена (business constraint)
+
+#### `Game` класа
+```typescript
+@Entity('games')
+@Unique(['developer', 'name'])
+export class Game {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @ManyToOne(() => GameDeveloper, { nullable: false })
+  @JoinColumn({ name: 'developer_id' })
+  developer: GameDeveloper;
+
+  @ManyToOne(() => Category, { nullable: false })
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
+
+  @Column({ type: 'varchar', nullable: false })
+  name: string;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
+  minCpu: number;
+
+  @Column({ name: 'min_memory', type: 'integer', nullable: false })
+  minMemory: number;
+
+  @Column({ type: 'boolean', nullable: false, default: false })
+  multiplayer: boolean;
+
+  @Column({ name: 'release_year', type: 'integer', nullable: false })
+  releaseYear: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
+  price: number;
+
+  @Column({ type: 'integer', nullable: false, default: 0 })
+  amount: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
+```
+
+**Отговорности:**
+- Представя видео игра в системата
+- Съдържа релации Many-to-One към Разработчик и Категория моделите
+- Composite unique constraint (developer + name)
+- Бизнес данни: CPU, памет, цена, количество, etc.
+
+**ООП принципи:**
+- **Асоциация**: Many-to-One релации с `GameDeveloper` и `Category` моделите
+- **Constraint валидация**: Unique constraint на ниво база данни
+
+### 2. Controller класове (Presentation Layer)
+
+Controller класовете обработват HTTP заявки и предоставят REST API endpoints.
+
+#### `CategoryController` класа
+```typescript
+@Controller('categories')
+export class CategoryController {
+  constructor(
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
+  ) {}
+
+  @Post()
+  @RouteSchema({ ... })
+  async create(@Body() createDto: CreateCategoryDto) { ... }
+
+  @Get()
+  @RouteSchema({ ... })
+  async findAll() { ... }
+
+  @Get(':id')
+  @RouteSchema({ ... })
+  async findOne(@Param('id') id: string) { ... }
+
+  @Patch(':id')
+  @RouteSchema({ ... })
+  async update(@Param('id') id: string, @Body() updateDto: UpdateCategoryDto) { ... }
+
+  @Delete(':id')
+  @RouteSchema({ ... })
+  async remove(@Param('id') id: string) { ... }
+
+  @Post('bulk-delete')
+  @RouteSchema({ ... })
+  async bulkRemove(@Body() bulkDeleteDto: BulkDeleteCategoryDto) { ... }
+}
+```
+
+**Отговорности:**
+- Обработка на HTTP заявки за категории
+- CRUD операции (Create, Read, Update, Delete)
+- Bulk delete операция
+- Валидация на входни данни
+- Swagger документация чрез декоратори
+
+**ООП принципи:**
+- **Dependency Injection**: Repository се инжектира чрез constructor
+- **Single Responsibility**: Само HTTP layer логика
+- **Декоратори**: NestJS декоратори за routing (@Controller, @Get, @Post, etc.)
+
+#### `GameDeveloperController` и `GameController` класове
+Аналогична структура на CategoryController, но за съответните entities.
+
+#### `HealthController` класа
+```typescript
+@Controller('health')
+export class HealthController {
+  @Get()
+  check() {
+    return { status: 'ok' };
+  }
+}
+```
+
+**Отговорности:**
+- Health check endpoint за мониторинг
+- Връща статус на приложението
+
+### 3. Schema класове (Validation Layer)
+
+Schema класовете дефинират валидационни правила и TypeScript типове използвайки TypeBox.
+
+#### `CategorySchema` класа
+```typescript
+export class CategorySchema {
+  // Params schemas
+  static id() {
+    return Type.Object({
+      id: Type.String({ format: 'uuid' }),
+    });
+  }
+
+  // Request schemas
+  static create() {
+    return Type.Object({
+      name: Type.String({ minLength: 1, maxLength: 255 }),
+    });
+  }
+
+  static update() {
+    return Type.Object({
+      name: Type.Optional(Type.String({ minLength: 1, maxLength: 255 })),
+    });
+  }
+
+  static bulkDelete() {
+    return Type.Object({
+      ids: Type.Array(Type.String({ format: 'uuid' }), { minItems: 1 }),
+    });
+  }
+
+  // Response schemas
+  static response() { ... }
+  static listItem() { ... }
+  static list() { ... }
+}
+
+// TypeScript типове
+export type CreateCategoryDto = Static<ReturnType<typeof CategorySchema.create>>;
+export type UpdateCategoryDto = Static<ReturnType<typeof CategorySchema.update>>;
+```
+
+**Отговорности:**
+- Дефиниране на JSON schema за валидация
+- Генериране на TypeScript типове
+- Схеми за генериране на Swagger (OpenAPI) документация
+- Централизирана валидация логика
+
+**ООП принципи:**
+- **Static методи**: Factory pattern за създаване на схеми
+- **Type Safety**: TypeScript типове от схеми
+- **Reusability**: Преизползваеми схеми за различни endpoints
+
+#### `GameDeveloperSchema` и `GameSchema` класове
+Аналогична структура, но с различни полета според entity-то.
+
+### 4. Module класове (Dependency Injection Container)
+
+#### `AppModule` класа
+```typescript
+@Module({
+  imports: [
+    TypeOrmModule.forRoot({
+      ...config.get('database'),
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    }),
+    TypeOrmModule.forFeature([GameDeveloper, Category, Game]),
+  ],
+  controllers: [HealthController, GameDeveloperController, CategoryController, GameController],
+  providers: [],
+})
+export class AppModule {}
+```
+
+**Отговорности:**
+- Регистрация на контролери
+- Конфигурация на TypeORM
+- Dependency Injection контейнер
+
+**ООП принципи:**
+- **Inversion of Control**: NestJS управлява lifecycle на класовете
+- **Модулна архитектура**: Всичко е организирано в модул
+
+### 5. Decorator класове (Cross-cutting Concerns)
+
+#### `RouteSchema` decorator
+```typescript
+export interface OpenApiSchema extends FastifySchema {
+  tags?: string[];
+  summary?: string;
+  description?: string;
+  deprecated?: boolean;
+}
+
+export const RouteSchema = (schema: OpenApiSchema) => {
+  return applyDecorators(RouteSchemaBase(schema));
+};
+```
+
+**Отговорности:**
+- Деклариране на Swagger/OpenAPI схеми
+- Fastify route validation
+- Wrapper около оригиналната NestJS RouteSchema, за могат да се добавят доъплнителни стойности използвани за документиране функционалността на endpoints
+
+**ООП принципи:**
+- **Decorator Pattern**: Добавя метаданни към методи
+- **Separation of Concerns**: Валидация отделена от бизнес логика
+
+### Обобщение на ООП принципите
+
+Проектът демонстрира следните ООП концепции:
+
+1. **Енкапсулация**: Данните и логиката са организирани в класове
+2. **Абстракция**: Скрива имплементационни детайли зад интерфейси
+3. **Наследяване**: TypeORM entities наследяват функционалност
+4. **Полиморфизъм**: Repository pattern позволява различни имплементации
+5. **Dependency Injection**: Loose coupling между компонентите
+6. **Single Responsibility**: Всеки клас има една единствена отговорност
+7. **Open/Closed**: Лесно разширяване без промяна на съществуващ код
+8. **Декоратори**: Metadata programming за конфигурация
+
+### Диаграма на класовете
+
+```
+┌─────────────────┐
+│   AppModule     │
+│   (Module)      │
+└────────┬────────┘
+         │ registers
+         ├──────────────┬──────────────┬──────────────┐
+         │              │              │              │
+         ▼              ▼              ▼              ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│  Category    │ │GameDeveloper │ │    Game      │ │   Health     │
+│ Controller   │ │ Controller   │ │ Controller   │ │ Controller   │
+└──────┬───────┘ └──────┬───────┘ └──────┬───────┘ └──────────────┘
+       │ uses          │ uses          │ uses
+       │               │               │
+       ▼               ▼               ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│  Category    │ │GameDeveloper │ │    Game      │
+│   Schema     │ │   Schema     │ │   Schema     │
+└──────────────┘ └──────────────┘ └──────────────┘
+       │               │               │
+       │ validates     │ validates     │ validates
+       ▼               ▼               ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│  Category    │ │GameDeveloper │ │    Game      │
+│   Entity     │ │   Entity     │ │   Entity     │
+└──────┬───────┘ └──────┬───────┘ └──────┬───────┘
+       │                │                │
+       │ One-to-Many    │                │ Many-to-One
+       └────────────────┼────────────-───┤
+                        │                │
+                        ▼                ▼
+                         ┌──────────────┐
+                         │  PostgreSQL  │
+                         │   Database   │
+                         └──────────────┘
+```
 
 ---
 
