@@ -119,7 +119,7 @@ export class GameDeveloperSchema {
 }
 
 // Export TypeScript types
-export type UuidParam = Static<ReturnType<typeof GameDeveloperSchema.uuidParam>>;
+export type UuidParam = Static<ReturnType<typeof GameDeveloperSchema.id>>;
 export type CreateGameDeveloperDto = Static<ReturnType<typeof GameDeveloperSchema.create>>;
 export type UpdateGameDeveloperDto = Static<ReturnType<typeof GameDeveloperSchema.update>>;
 export type BulkDeleteGameDeveloperDto = Static<ReturnType<typeof GameDeveloperSchema.bulkDelete>>;

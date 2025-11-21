@@ -119,7 +119,7 @@ export class CategorySchema {
 }
 
 // Export TypeScript types
-export type UuidParam = Static<ReturnType<typeof CategorySchema.uuidParam>>;
+export type UuidParam = Static<ReturnType<typeof CategorySchema.id>>;
 export type CreateCategoryDto = Static<ReturnType<typeof CategorySchema.create>>;
 export type UpdateCategoryDto = Static<ReturnType<typeof CategorySchema.update>>;
 export type BulkDeleteCategoryDto = Static<ReturnType<typeof CategorySchema.bulkDelete>>;

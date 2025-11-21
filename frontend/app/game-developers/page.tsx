@@ -219,19 +219,19 @@ export default function GameDevelopersPage() {
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-1 text-wrap">
+              <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('gamesCount')} className="-ml-4">
                   Games Count
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-1 text-wrap">
+              <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('createdAt')} className="-ml-4">
                   Created At
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-1 text-wrap" className="text-right">
+              <TableHead className="w-1" className="text-center">
                 Actions
               </TableHead>
             </TableRow>
@@ -289,7 +289,7 @@ export default function GameDevelopersPage() {
                         startEditing(developer);
                       }}
                     >
-                      <span>{developer.name}</span>
+                      <span className="text-nowrap">{developer.name}</span>
                     </TableCell>
                   )}
                   <TableCell className="text-center">{developer.gamesCount}</TableCell>

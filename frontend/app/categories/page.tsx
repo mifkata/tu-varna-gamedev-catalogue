@@ -219,19 +219,19 @@ export default function CategoriesPage() {
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-1 text-wrap">
+              <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('gamesCount')} className="-ml-4">
                   Games Count
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-1 text-wrap">
+              <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('createdAt')} className="-ml-4">
                   Created At
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-1 text-wrap text-right">Actions</TableHead>
+              <TableHead className="w-1 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

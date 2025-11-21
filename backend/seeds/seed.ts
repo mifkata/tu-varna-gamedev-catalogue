@@ -2,7 +2,6 @@ import { AppDataSource } from '../data-source';
 import { Category } from '../entities/Category.entity';
 import { Game } from '../entities/Game.entity';
 import { GameDeveloper } from '../entities/GameDeveloper.entity';
-import { Inventory } from '../entities/Inventory.entity';
 
 class DatabaseSeeder {
   private developers: Record<string, GameDeveloper> = {};
@@ -11,7 +10,6 @@ class DatabaseSeeder {
 
   async clearData(): Promise<void> {
     console.log('Clearing existing data...');
-    await AppDataSource.getRepository(Inventory).deleteAll();
     await AppDataSource.getRepository(Game).deleteAll();
     await AppDataSource.getRepository(Category).deleteAll();
     await AppDataSource.getRepository(GameDeveloper).deleteAll();
@@ -120,6 +118,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: false,
       releaseYear: 2015,
+      price: 39.99,
     });
 
     this.games.cyberpunk = await gameRepo.save({
@@ -130,6 +129,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: false,
       releaseYear: 2020,
+      price: 59.99,
     });
 
     // Rockstar Games
@@ -141,6 +141,7 @@ class DatabaseSeeder {
       minMemory: 4096,
       multiplayer: true,
       releaseYear: 2013,
+      price: 29.99,
     });
 
     this.games.rdr2 = await gameRepo.save({
@@ -151,6 +152,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: true,
       releaseYear: 2018,
+      price: 59.99,
     });
 
     // Valve games
@@ -162,6 +164,7 @@ class DatabaseSeeder {
       minMemory: 12288,
       multiplayer: false,
       releaseYear: 2020,
+      price: 29.99,
     });
 
     this.games.portal2 = await gameRepo.save({
@@ -172,6 +175,7 @@ class DatabaseSeeder {
       minMemory: 2048,
       multiplayer: true,
       releaseYear: 2011,
+      price: 29.99,
     });
 
     this.games.counterStrike2 = await gameRepo.save({
@@ -182,6 +186,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: true,
       releaseYear: 2023,
+      price: 29.99,
     });
 
     // Classic Valve games
@@ -193,6 +198,7 @@ class DatabaseSeeder {
       minMemory: 512,
       multiplayer: false,
       releaseYear: 1998,
+      price: 29.99,
     });
 
     this.games.counterStrike16 = await gameRepo.save({
@@ -203,6 +209,7 @@ class DatabaseSeeder {
       minMemory: 512,
       multiplayer: true,
       releaseYear: 2000,
+      price: 29.99,
     });
 
     this.games.portal = await gameRepo.save({
@@ -213,6 +220,7 @@ class DatabaseSeeder {
       minMemory: 512,
       multiplayer: false,
       releaseYear: 2007,
+      price: 29.99,
     });
 
     // FromSoftware games
@@ -224,6 +232,7 @@ class DatabaseSeeder {
       minMemory: 12288,
       multiplayer: true,
       releaseYear: 2022,
+      price: 29.99,
     });
 
     this.games.darkSouls3 = await gameRepo.save({
@@ -234,6 +243,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: true,
       releaseYear: 2016,
+      price: 29.99,
     });
 
     this.games.sekiro = await gameRepo.save({
@@ -244,6 +254,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: false,
       releaseYear: 2019,
+      price: 29.99,
     });
 
     // Bethesda games
@@ -255,6 +266,7 @@ class DatabaseSeeder {
       minMemory: 4096,
       multiplayer: false,
       releaseYear: 2011,
+      price: 29.99,
     });
 
     this.games.fallout4 = await gameRepo.save({
@@ -265,6 +277,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: false,
       releaseYear: 2015,
+      price: 29.99,
     });
 
     this.games.morrowind = await gameRepo.save({
@@ -275,6 +288,7 @@ class DatabaseSeeder {
       minMemory: 256,
       multiplayer: false,
       releaseYear: 2002,
+      price: 29.99,
     });
 
     // Nintendo games
@@ -286,6 +300,7 @@ class DatabaseSeeder {
       minMemory: 4096,
       multiplayer: false,
       releaseYear: 2017,
+      price: 29.99,
     });
 
     // Blizzard games
@@ -297,6 +312,7 @@ class DatabaseSeeder {
       minMemory: 6144,
       multiplayer: true,
       releaseYear: 2022,
+      price: 29.99,
     });
 
     this.games.diablo4 = await gameRepo.save({
@@ -307,6 +323,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: true,
       releaseYear: 2023,
+      price: 29.99,
     });
 
     this.games.wow = await gameRepo.save({
@@ -317,6 +334,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: true,
       releaseYear: 2004,
+      price: 29.99,
     });
 
     this.games.starcraft2 = await gameRepo.save({
@@ -327,6 +345,7 @@ class DatabaseSeeder {
       minMemory: 4096,
       multiplayer: true,
       releaseYear: 2010,
+      price: 29.99,
     });
 
     // Classic Blizzard games
@@ -338,6 +357,7 @@ class DatabaseSeeder {
       minMemory: 128,
       multiplayer: true,
       releaseYear: 1998,
+      price: 29.99,
     });
 
     this.games.warcraft3 = await gameRepo.save({
@@ -348,6 +368,7 @@ class DatabaseSeeder {
       minMemory: 256,
       multiplayer: true,
       releaseYear: 2002,
+      price: 29.99,
     });
 
     this.games.diablo2 = await gameRepo.save({
@@ -358,6 +379,7 @@ class DatabaseSeeder {
       minMemory: 256,
       multiplayer: true,
       releaseYear: 2000,
+      price: 29.99,
     });
 
     // Ubisoft games
@@ -369,6 +391,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: false,
       releaseYear: 2020,
+      price: 29.99,
     });
 
     this.games.farcry6 = await gameRepo.save({
@@ -379,6 +402,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: true,
       releaseYear: 2021,
+      price: 29.99,
     });
 
     // EA games
@@ -390,6 +414,7 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: true,
       releaseYear: 2023,
+      price: 29.99,
     });
 
     this.games.apexLegends = await gameRepo.save({
@@ -400,6 +425,7 @@ class DatabaseSeeder {
       minMemory: 6144,
       multiplayer: true,
       releaseYear: 2019,
+      price: 29.99,
     });
 
     // Naughty Dog games
@@ -411,6 +437,7 @@ class DatabaseSeeder {
       minMemory: 16384,
       multiplayer: false,
       releaseYear: 2022,
+      price: 29.99,
     });
 
     this.games.uncharted4 = await gameRepo.save({
@@ -421,52 +448,10 @@ class DatabaseSeeder {
       minMemory: 8192,
       multiplayer: true,
       releaseYear: 2016,
+      price: 29.99,
     });
 
     console.log(`✓ ${Object.keys(this.games).length} games seeded`);
-  }
-
-  async seedInventory(): Promise<void> {
-    console.log('Seeding inventory...');
-    const inventoryRepo = AppDataSource.getRepository(Inventory);
-
-    const inventoryData = [
-      { game: this.games.witcher3, units: 150, price: 39.99 },
-      { game: this.games.cyberpunk, units: 200, price: 59.99 },
-      { game: this.games.gtaV, units: 500, price: 29.99 },
-      { game: this.games.rdr2, units: 180, price: 59.99 },
-      { game: this.games.halfLifeAlyx, units: 75, price: 59.99 },
-      { game: this.games.portal2, units: 300, price: 9.99 },
-      { game: this.games.counterStrike2, units: 1000, price: 0.0 },
-      { game: this.games.eldenRing, units: 250, price: 59.99 },
-      { game: this.games.darkSouls3, units: 120, price: 39.99 },
-      { game: this.games.sekiro, units: 140, price: 59.99 },
-      { game: this.games.skyrim, units: 400, price: 39.99 },
-      { game: this.games.fallout4, units: 220, price: 29.99 },
-      { game: this.games.zelda, units: 100, price: 59.99 },
-      { game: this.games.overwatch2, units: 800, price: 0.0 },
-      { game: this.games.diablo4, units: 300, price: 69.99 },
-      { game: this.games.wow, units: 450, price: 39.99 },
-      { game: this.games.starcraft2, units: 200, price: 0.0 },
-      { game: this.games.assassinsCreed, units: 180, price: 59.99 },
-      { game: this.games.farcry6, units: 160, price: 49.99 },
-      { game: this.games.fifa23, units: 350, price: 69.99 },
-      { game: this.games.apexLegends, units: 900, price: 0.0 },
-      { game: this.games.lastOfUs, units: 110, price: 59.99 },
-      { game: this.games.uncharted4, units: 95, price: 39.99 },
-      // Classic games
-      { game: this.games.halfLife, units: 500, price: 9.99 },
-      { game: this.games.counterStrike16, units: 800, price: 7.99 },
-      { game: this.games.portal, units: 450, price: 8.99 },
-      { game: this.games.morrowind, units: 200, price: 14.99 },
-      { game: this.games.starcraft, units: 300, price: 9.99 },
-      { game: this.games.warcraft3, units: 250, price: 14.99 },
-      { game: this.games.diablo2, units: 350, price: 19.99 },
-    ];
-
-    await inventoryRepo.save(inventoryData);
-
-    console.log(`✓ ${inventoryData.length} inventory records seeded`);
   }
 
   async seed(): Promise<void> {
@@ -478,14 +463,12 @@ class DatabaseSeeder {
       await this.seedDevelopers();
       await this.seedCategories();
       await this.seedGames();
-      await this.seedInventory();
 
       console.log('\n✅ All fixtures seeded successfully!');
       console.log('\nSummary:');
       console.log(`- ${Object.keys(this.developers).length} Game Developers`);
       console.log(`- ${Object.keys(this.categories).length} Categories`);
       console.log(`- ${Object.keys(this.games).length} Games`);
-      console.log(`- ${Object.keys(this.games).length} Inventory records`);
     } catch (error) {
       console.error('Error during seeding:', error);
       process.exit(1);

@@ -43,3 +43,49 @@ export interface CreateCategoryDto {
 export interface UpdateCategoryDto {
   name?: string;
 }
+
+export interface GameDeveloperNested {
+  id: string;
+  name: string;
+}
+
+export interface CategoryNested {
+  id: string;
+  name: string;
+}
+
+export interface GameResponse {
+  id: string;
+  name: string;
+  developer: GameDeveloperNested;
+  category: CategoryNested;
+  minCpu: number;
+  minMemory: number;
+  multiplayer: boolean;
+  releaseYear: number;
+  price: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateGameDto {
+  name: string;
+  developerId: string;
+  categoryId: string;
+  minCpu: number;
+  minMemory: number;
+  multiplayer: boolean;
+  releaseYear: number;
+  price: number;
+}
+
+export interface UpdateGameDto {
+  name?: string;
+  developerId?: string;
+  categoryId?: string;
+  minCpu?: number;
+  minMemory?: number;
+  multiplayer?: boolean;
+  releaseYear?: number;
+  price?: number;
+}

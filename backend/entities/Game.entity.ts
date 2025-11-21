@@ -7,12 +7,10 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
-  OneToOne,
 } from 'typeorm';
 
 import { Category } from './Category.entity';
 import { GameDeveloper } from './GameDeveloper.entity';
-import { Inventory } from './Inventory.entity';
 
 @Entity('games')
 @Unique(['developer', 'name'])
@@ -49,8 +47,8 @@ export class Game {
   @Column({ name: 'release_year', type: 'integer', nullable: false })
   releaseYear: number;
 
-  @OneToOne(() => Inventory, (inventory) => inventory.game)
-  inventory: Inventory;
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
+  price: number;
 
   @CreateDateColumn({
     name: 'created_at',
