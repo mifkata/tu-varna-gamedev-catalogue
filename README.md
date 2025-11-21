@@ -228,7 +228,7 @@ pnpm seed  # Optional: reseed with sample data
 
 **Check migration status:**
 ```bash
-pnpm typeorm migration:show -d backend/data-source.ts
+pnpm migration:status
 ```
 
 ### Module Not Found

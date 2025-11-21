@@ -208,31 +208,32 @@ export default function GameDevelopersPage() {
               <TableHead className="w-[50px]">
                 <Checkbox
                   checked={
-                    filteredDevelopers.length > 0 &&
-                    selectedIds.size === filteredDevelopers.length
+                    filteredDevelopers.length > 0 && selectedIds.size === filteredDevelopers.length
                   }
                   onCheckedChange={toggleSelectAll}
                 />
               </TableHead>
-              <TableHead>
+              <TableHead className="w-full">
                 <Button variant="ghost" onClick={() => handleSort('name')} className="-ml-4">
                   Name
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead>
+              <TableHead className="w-1 text-wrap">
                 <Button variant="ghost" onClick={() => handleSort('gamesCount')} className="-ml-4">
                   Games Count
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead>
+              <TableHead className="w-1 text-wrap">
                 <Button variant="ghost" onClick={() => handleSort('createdAt')} className="-ml-4">
                   Created At
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead className="w-1 text-wrap" className="text-right">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -244,15 +245,16 @@ export default function GameDevelopersPage() {
               </TableRow>
             ) : (
               filteredDevelopers.map((developer) => (
-                <TableRow key={developer.id}>
+                <TableRow
+                  className="cursor-pointer"
+                  key={developer.id}
+                  onClick={() => toggleSelectOne(developer.id)}
+                >
                   <TableCell>
-                    <Checkbox
-                      checked={selectedIds.has(developer.id)}
-                      onCheckedChange={() => toggleSelectOne(developer.id)}
-                    />
+                    <Checkbox checked={selectedIds.has(developer.id)} />
                   </TableCell>
-                  <TableCell>
-                    {editingId === developer.id ? (
+                  {editingId === developer.id ? (
+                    <TableCell>
                       <div className="flex items-center gap-2">
                         <Input
                           value={editingName}
@@ -278,12 +280,22 @@ export default function GameDevelopersPage() {
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
-                    ) : (
-                      <span className="font-medium">{developer.name}</span>
-                    )}
+                    </TableCell>
+                  ) : (
+                    <TableCell
+                      className="font-medium cursor-text"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        startEditing(developer);
+                      }}
+                    >
+                      <span>{developer.name}</span>
+                    </TableCell>
+                  )}
+                  <TableCell className="text-center">{developer.gamesCount}</TableCell>
+                  <TableCell className="text-center">
+                    {new Date(developer.createdAt).toLocaleDateString()}
                   </TableCell>
-                  <TableCell>{developer.gamesCount}</TableCell>
-                  <TableCell>{new Date(developer.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
                       {editingId !== developer.id && (
@@ -291,7 +303,10 @@ export default function GameDevelopersPage() {
                           <Button
                             size="icon"
                             variant="ghost"
-                            onClick={() => startEditing(developer)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              startEditing(developer);
+                            }}
                           >
                             <Pencil className="h-4 w-4" />
                           </Button>
