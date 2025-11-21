@@ -64,7 +64,7 @@ export class GameDeveloperController {
   @Get(':id')
   @RouteSchema({
     tags: ['Game Developers'],
-    params: GameDeveloperSchema.uuidParam(),
+    params: GameDeveloperSchema.id(),
     response: {
       200: GameDeveloperSchema.response(),
     },
@@ -84,7 +84,7 @@ export class GameDeveloperController {
   @Patch(':id')
   @RouteSchema({
     tags: ['Game Developers'],
-    params: GameDeveloperSchema.uuidParam(),
+    params: GameDeveloperSchema.id(),
     body: GameDeveloperSchema.update(),
     response: {
       200: GameDeveloperSchema.response(),
@@ -117,9 +117,7 @@ export class GameDeveloperController {
     if (gameDevelopers.length !== ids.length) {
       const foundIds = gameDevelopers.map((dev) => dev.id);
       const missingIds = ids.filter((id) => !foundIds.includes(id));
-      throw new NotFoundException(
-        `Game developers with IDs ${missingIds.join(', ')} not found`,
-      );
+      throw new NotFoundException(`Game developers with IDs ${missingIds.join(', ')} not found`);
     }
 
     await this.gameDeveloperRepository.remove(gameDevelopers);
@@ -129,7 +127,7 @@ export class GameDeveloperController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @RouteSchema({
     tags: ['Game Developers'],
-    params: GameDeveloperSchema.uuidParam(),
+    params: GameDeveloperSchema.id(),
   })
   async remove(@Param('id') id: string) {
     const gameDeveloper = await this.gameDeveloperRepository.findOne({

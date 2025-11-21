@@ -1,6 +1,6 @@
 import { Type, Static } from '@sinclair/typebox';
 
-export class GameDeveloperSchema {
+export class CategorySchema {
   // Params schemas
   static id() {
     return Type.Object(
@@ -10,7 +10,7 @@ export class GameDeveloperSchema {
           description: 'UUID parameter',
         }),
       },
-      { $id: 'UuidParam' },
+      { $id: 'CategoryUuidParam' },
     );
   }
 
@@ -21,10 +21,10 @@ export class GameDeveloperSchema {
         name: Type.String({
           minLength: 1,
           maxLength: 255,
-          description: 'The name of the game developer',
+          description: 'The name of the category',
         }),
       },
-      { $id: 'CreateGameDeveloper' },
+      { $id: 'CreateCategory' },
     );
   }
 
@@ -35,11 +35,11 @@ export class GameDeveloperSchema {
           Type.String({
             minLength: 1,
             maxLength: 255,
-            description: 'The name of the game developer',
+            description: 'The name of the category',
           }),
         ),
       },
-      { $id: 'UpdateGameDeveloper' },
+      { $id: 'UpdateCategory' },
     );
   }
 
@@ -49,15 +49,15 @@ export class GameDeveloperSchema {
         ids: Type.Array(
           Type.String({
             format: 'uuid',
-            description: 'UUID of a game developer to delete',
+            description: 'UUID of a category to delete',
           }),
           {
             minItems: 1,
-            description: 'Array of game developer IDs to delete',
+            description: 'Array of category IDs to delete',
           },
         ),
       },
-      { $id: 'BulkDeleteGameDeveloper' },
+      { $id: 'BulkDeleteCategory' },
     );
   }
 
@@ -70,7 +70,7 @@ export class GameDeveloperSchema {
           description: 'The unique identifier',
         }),
         name: Type.String({
-          description: 'The name of the game developer',
+          description: 'The name of the category',
         }),
         createdAt: Type.String({
           format: 'date-time',
@@ -81,7 +81,7 @@ export class GameDeveloperSchema {
           description: 'Last update timestamp',
         }),
       },
-      { $id: 'GameDeveloperResponse' },
+      { $id: 'CategoryResponse' },
     );
   }
 
@@ -93,10 +93,10 @@ export class GameDeveloperSchema {
           description: 'The unique identifier',
         }),
         name: Type.String({
-          description: 'The name of the game developer',
+          description: 'The name of the category',
         }),
         gamesCount: Type.Number({
-          description: 'The number of games by this developer',
+          description: 'The number of games in this category',
         }),
         createdAt: Type.String({
           format: 'date-time',
@@ -107,21 +107,21 @@ export class GameDeveloperSchema {
           description: 'Last update timestamp',
         }),
       },
-      { $id: 'GameDeveloperListItem' },
+      { $id: 'CategoryListItem' },
     );
   }
 
   static list() {
     return Type.Array(this.listItem(), {
-      $id: 'GameDeveloperList',
+      $id: 'CategoryList',
     });
   }
 }
 
 // Export TypeScript types
-export type UuidParam = Static<ReturnType<typeof GameDeveloperSchema.uuidParam>>;
-export type CreateGameDeveloperDto = Static<ReturnType<typeof GameDeveloperSchema.create>>;
-export type UpdateGameDeveloperDto = Static<ReturnType<typeof GameDeveloperSchema.update>>;
-export type BulkDeleteGameDeveloperDto = Static<ReturnType<typeof GameDeveloperSchema.bulkDelete>>;
-export type GameDeveloperResponse = Static<ReturnType<typeof GameDeveloperSchema.response>>;
-export type GameDeveloperListItem = Static<ReturnType<typeof GameDeveloperSchema.listItem>>;
+export type UuidParam = Static<ReturnType<typeof CategorySchema.uuidParam>>;
+export type CreateCategoryDto = Static<ReturnType<typeof CategorySchema.create>>;
+export type UpdateCategoryDto = Static<ReturnType<typeof CategorySchema.update>>;
+export type BulkDeleteCategoryDto = Static<ReturnType<typeof CategorySchema.bulkDelete>>;
+export type CategoryResponse = Static<ReturnType<typeof CategorySchema.response>>;
+export type CategoryListItem = Static<ReturnType<typeof CategorySchema.listItem>>;
