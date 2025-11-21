@@ -27,6 +27,7 @@ export default function NewGamePage() {
   const [multiplayer, setMultiplayer] = useState(false);
   const [releaseYear, setReleaseYear] = useState('');
   const [price, setPrice] = useState('');
+  const [amount, setAmount] = useState('');
 
   const [developers, setDevelopers] = useState<GameDeveloperListItem[]>([]);
   const [categories, setCategories] = useState<CategoryListItem[]>([]);
@@ -75,6 +76,7 @@ export default function NewGamePage() {
       setMultiplayer(game.multiplayer);
       setReleaseYear(game.releaseYear.toString());
       setPrice(game.price.toString());
+      setAmount(game.amount.toString());
     } catch (err) {
       setError('Failed to load game');
       console.error('Failed to load game:', err);
@@ -124,6 +126,12 @@ export default function NewGamePage() {
       return;
     }
 
+    const amountNum = parseInt(amount, 10);
+    if (isNaN(amountNum) || amountNum < 0) {
+      setError('Valid amount is required');
+      return;
+    }
+
     try {
       setLoading(true);
       const gameData = {
@@ -135,6 +143,7 @@ export default function NewGamePage() {
         multiplayer,
         releaseYear: releaseYearNum,
         price: priceNum,
+        amount: amountNum,
       };
 
       if (isEditMode) {
@@ -282,6 +291,20 @@ export default function NewGamePage() {
               placeholder="29.99"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              disabled={loading}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="amount">Amount (Copies Available)</Label>
+            <Input
+              id="amount"
+              type="number"
+              min="0"
+              placeholder="100"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
               disabled={loading}
               required
             />

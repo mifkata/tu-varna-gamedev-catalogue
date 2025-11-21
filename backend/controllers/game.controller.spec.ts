@@ -40,6 +40,7 @@ describe('/api/games', () => {
           multiplayer: true,
           releaseYear: 2023,
           price: 29.99,
+          amount: 100,
         })
         .expect(201);
 
@@ -60,6 +61,7 @@ describe('/api/games', () => {
         multiplayer: true,
         releaseYear: 2023,
         price: 29.99,
+        amount: 100,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       });
@@ -79,6 +81,7 @@ describe('/api/games', () => {
           multiplayer: false,
           releaseYear: 2023,
           price: 29.99,
+          amount: 50,
         })
         .expect(404);
     });
@@ -95,6 +98,7 @@ describe('/api/games', () => {
           multiplayer: false,
           releaseYear: 2023,
           price: 29.99,
+          amount: 50,
         })
         .expect(404);
     });
@@ -127,6 +131,7 @@ describe('/api/games', () => {
         multiplayer: expect.any(Boolean),
         releaseYear: expect.any(Number),
         price: expect.any(Number),
+        amount: expect.any(Number),
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       });
@@ -154,6 +159,7 @@ describe('/api/games', () => {
         multiplayer: true,
         releaseYear: 2023,
         price: 29.99,
+        amount: 100,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       });
@@ -211,6 +217,7 @@ describe('/api/games', () => {
           multiplayer: false,
           releaseYear: 2020,
           price: 19.99,
+          amount: 25,
         })
         .expect(201);
       game1Id = (game1.body as GameResponse).id;
@@ -226,6 +233,7 @@ describe('/api/games', () => {
           multiplayer: false,
           releaseYear: 2021,
           price: 19.99,
+          amount: 30,
         })
         .expect(201);
       game2Id = (game2.body as GameResponse).id;
@@ -241,6 +249,7 @@ describe('/api/games', () => {
           multiplayer: false,
           releaseYear: 2022,
           price: 19.99,
+          amount: 35,
         })
         .expect(201);
       game3Id = (game3.body as GameResponse).id;

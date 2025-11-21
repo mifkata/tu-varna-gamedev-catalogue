@@ -64,6 +64,7 @@ export interface GameResponse {
   multiplayer: boolean;
   releaseYear: number;
   price: number;
+  amount: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -77,6 +78,7 @@ export interface CreateGameDto {
   multiplayer: boolean;
   releaseYear: number;
   price: number;
+  amount: number;
 }
 
 export interface UpdateGameDto {
@@ -88,4 +90,5 @@ export interface UpdateGameDto {
   multiplayer?: boolean;
   releaseYear?: number;
   price?: number;
+  amount?: number;
 }

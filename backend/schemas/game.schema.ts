@@ -52,6 +52,10 @@ export class GameSchema {
           minimum: 0,
           description: 'The price of the game',
         }),
+        amount: Type.Integer({
+          minimum: 0,
+          description: 'The number of copies available',
+        }),
       },
       { $id: 'CreateGame' },
     );
@@ -107,6 +111,12 @@ export class GameSchema {
           Type.Number({
             minimum: 0,
             description: 'The price of the game',
+          }),
+        ),
+        amount: Type.Optional(
+          Type.Integer({
+            minimum: 0,
+            description: 'The number of copies available',
           }),
         ),
       },
@@ -174,6 +184,9 @@ export class GameSchema {
         }),
         price: Type.Number({
           description: 'The price of the game',
+        }),
+        amount: Type.Number({
+          description: 'The number of copies available',
         }),
         createdAt: Type.String({
           format: 'date-time',

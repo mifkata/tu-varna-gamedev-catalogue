@@ -71,6 +71,7 @@ export class GameController {
       multiplayer: createDto.multiplayer,
       releaseYear: createDto.releaseYear,
       price: createDto.price,
+      amount: createDto.amount,
     });
 
     return this.gameRepository.save(game);
@@ -162,6 +163,7 @@ export class GameController {
     if (updateDto.multiplayer !== undefined) game.multiplayer = updateDto.multiplayer;
     if (updateDto.releaseYear !== undefined) game.releaseYear = updateDto.releaseYear;
     if (updateDto.price !== undefined) game.price = updateDto.price;
+    if (updateDto.amount !== undefined) game.amount = updateDto.amount;
 
     return this.gameRepository.save(game);
   }

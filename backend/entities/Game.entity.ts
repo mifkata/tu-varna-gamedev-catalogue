@@ -50,6 +50,9 @@ export class Game {
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
   price: number;
 
+  @Column({ type: 'integer', nullable: false, default: 0 })
+  amount: number;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',

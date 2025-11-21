@@ -119,6 +119,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2015,
       price: 39.99,
+      amount: 150,
     });
 
     this.games.cyberpunk = await gameRepo.save({
@@ -130,6 +131,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2020,
       price: 59.99,
+      amount: 200,
     });
 
     // Rockstar Games
@@ -142,6 +144,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2013,
       price: 29.99,
+      amount: 300,
     });
 
     this.games.rdr2 = await gameRepo.save({
@@ -153,6 +156,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2018,
       price: 59.99,
+      amount: 175,
     });
 
     // Valve games
@@ -165,6 +169,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2020,
       price: 29.99,
+      amount: 120,
     });
 
     this.games.portal2 = await gameRepo.save({
@@ -176,6 +181,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2011,
       price: 29.99,
+      amount: 250,
     });
 
     this.games.counterStrike2 = await gameRepo.save({
@@ -187,6 +193,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2023,
       price: 29.99,
+      amount: 500,
     });
 
     // Classic Valve games
@@ -199,6 +206,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 1998,
       price: 29.99,
+      amount: 100,
     });
 
     this.games.counterStrike16 = await gameRepo.save({
@@ -210,6 +218,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2000,
       price: 29.99,
+      amount: 150,
     });
 
     this.games.portal = await gameRepo.save({
@@ -221,6 +230,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2007,
       price: 29.99,
+      amount: 200,
     });
 
     // FromSoftware games
@@ -233,6 +243,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2022,
       price: 29.99,
+      amount: 220,
     });
 
     this.games.darkSouls3 = await gameRepo.save({
@@ -244,6 +255,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2016,
       price: 29.99,
+      amount: 180,
     });
 
     this.games.sekiro = await gameRepo.save({
@@ -255,6 +267,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2019,
       price: 29.99,
+      amount: 160,
     });
 
     // Bethesda games
@@ -267,6 +280,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2011,
       price: 29.99,
+      amount: 350,
     });
 
     this.games.fallout4 = await gameRepo.save({
@@ -278,6 +292,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2015,
       price: 29.99,
+      amount: 200,
     });
 
     this.games.morrowind = await gameRepo.save({
@@ -289,6 +304,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2002,
       price: 29.99,
+      amount: 80,
     });
 
     // Nintendo games
@@ -301,6 +317,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2017,
       price: 29.99,
+      amount: 280,
     });
 
     // Blizzard games
@@ -313,6 +330,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2022,
       price: 29.99,
+      amount: 400,
     });
 
     this.games.diablo4 = await gameRepo.save({
@@ -324,6 +342,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2023,
       price: 29.99,
+      amount: 300,
     });
 
     this.games.wow = await gameRepo.save({
@@ -335,6 +354,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2004,
       price: 29.99,
+      amount: 500,
     });
 
     this.games.starcraft2 = await gameRepo.save({
@@ -346,6 +366,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2010,
       price: 29.99,
+      amount: 220,
     });
 
     // Classic Blizzard games
@@ -358,6 +379,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 1998,
       price: 29.99,
+      amount: 120,
     });
 
     this.games.warcraft3 = await gameRepo.save({
@@ -369,6 +391,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2002,
       price: 29.99,
+      amount: 150,
     });
 
     this.games.diablo2 = await gameRepo.save({
@@ -380,6 +403,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2000,
       price: 29.99,
+      amount: 100,
     });
 
     // Ubisoft games
@@ -392,6 +416,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2020,
       price: 29.99,
+      amount: 190,
     });
 
     this.games.farcry6 = await gameRepo.save({
@@ -403,6 +428,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2021,
       price: 29.99,
+      amount: 170,
     });
 
     // EA games
@@ -415,6 +441,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2023,
       price: 29.99,
+      amount: 350,
     });
 
     this.games.apexLegends = await gameRepo.save({
@@ -426,6 +453,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2019,
       price: 29.99,
+      amount: 450,
     });
 
     // Naughty Dog games
@@ -438,6 +466,7 @@ class DatabaseSeeder {
       multiplayer: false,
       releaseYear: 2022,
       price: 29.99,
+      amount: 160,
     });
 
     this.games.uncharted4 = await gameRepo.save({
@@ -449,6 +478,7 @@ class DatabaseSeeder {
       multiplayer: true,
       releaseYear: 2016,
       price: 29.99,
+      amount: 140,
     });
 
     console.log(`✓ ${Object.keys(this.games).length} games seeded`);

@@ -38,6 +38,7 @@ type SortField =
   | 'minCpu'
   | 'minMemory'
   | 'price'
+  | 'amount'
   | 'multiplayer'
   | 'createdAt';
 type SortOrder = 'asc' | 'desc';
@@ -75,6 +76,7 @@ function GamesPageContent() {
   const [editMultiplayer, setEditMultiplayer] = useState(false);
   const [editReleaseYear, setEditReleaseYear] = useState('');
   const [editPrice, setEditPrice] = useState('');
+  const [editAmount, setEditAmount] = useState('');
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
 
@@ -192,6 +194,7 @@ function GamesPageContent() {
       setEditMultiplayer(game.multiplayer);
       setEditReleaseYear(game.releaseYear.toString());
       setEditPrice(game.price.toString());
+      setEditAmount(game.amount.toString());
       setEditError('');
     } catch (error) {
       console.error('Failed to load game:', error);
@@ -323,6 +326,12 @@ function GamesPageContent() {
       return;
     }
 
+    const amountNum = parseInt(editAmount, 10);
+    if (isNaN(amountNum) || amountNum < 0) {
+      setEditError('Valid amount is required');
+      return;
+    }
+
     try {
       setEditLoading(true);
       await gamesApi.update(editId, {
@@ -334,6 +343,7 @@ function GamesPageContent() {
         multiplayer: editMultiplayer,
         releaseYear: releaseYearNum,
         price: priceNum,
+        amount: amountNum,
       });
       await loadGames();
       closeEditModal();
@@ -457,6 +467,12 @@ function GamesPageContent() {
                 </Button>
               </TableHead>
               <TableHead className="w-1 text-nowrap">
+                <Button variant="ghost" onClick={() => handleSort('amount')} className="-ml-4">
+                  Amount
+                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
+              <TableHead className="w-1 text-nowrap">
                 <Button variant="ghost" onClick={() => handleSort('multiplayer')} className="-ml-4">
                   Multiplayer
                   <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -468,7 +484,7 @@ function GamesPageContent() {
           <TableBody>
             {filteredGames.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={10} className="text-center text-muted-foreground">
+                <TableCell colSpan={11} className="text-center text-muted-foreground">
                   No games found.
                 </TableCell>
               </TableRow>
@@ -514,6 +530,7 @@ function GamesPageContent() {
                   <TableCell className="text-center">{game.minCpu}</TableCell>
                   <TableCell className="text-center">{game.minMemory}</TableCell>
                   <TableCell className="text-center">${game.price.toFixed(2)}</TableCell>
+                  <TableCell className="text-center">{game.amount}</TableCell>
                   <TableCell
                     className="text-center cursor-pointer hover:underline"
                     onClick={(e) => {
@@ -663,6 +680,19 @@ function GamesPageContent() {
                 min="0"
                 value={editPrice}
                 onChange={(e) => setEditPrice(e.target.value)}
+                disabled={editLoading}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="edit-amount">Amount (Copies Available)</Label>
+              <Input
+                id="edit-amount"
+                type="number"
+                min="0"
+                value={editAmount}
+                onChange={(e) => setEditAmount(e.target.value)}
                 disabled={editLoading}
                 required
               />
