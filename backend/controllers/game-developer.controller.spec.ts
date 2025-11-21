@@ -1,4 +1,4 @@
-import {
+import type {
   GameDeveloperResponse,
   GameDeveloperListItem,
 } from '@backend/schemas/game-developer.schema';
@@ -104,19 +104,19 @@ describe('/api/game-developers', () => {
         .post('/api/game-developers')
         .send({ name: 'Bulk Test Developer 1' })
         .expect(201);
-      developer1Id = dev1.body.id;
+      developer1Id = (dev1.body as GameDeveloperResponse).id;
 
       const dev2 = await request
         .post('/api/game-developers')
         .send({ name: 'Bulk Test Developer 2' })
         .expect(201);
-      developer2Id = dev2.body.id;
+      developer2Id = (dev2.body as GameDeveloperResponse).id;
 
       const dev3 = await request
         .post('/api/game-developers')
         .send({ name: 'Bulk Test Developer 3' })
         .expect(201);
-      developer3Id = dev3.body.id;
+      developer3Id = (dev3.body as GameDeveloperResponse).id;
     });
 
     it('should delete multiple game developers', async () => {

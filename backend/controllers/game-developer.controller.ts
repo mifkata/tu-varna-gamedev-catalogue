@@ -18,17 +18,10 @@ import { Repository } from 'typeorm';
 import { RouteSchema } from '../decorators/route-schema.decorator';
 import { GameDeveloper } from '../entities/GameDeveloper.entity';
 import {
-  uuidParamSchema,
-  createGameDeveloperSchema,
-  updateGameDeveloperSchema,
-  bulkDeleteGameDeveloperSchema,
-  gameDeveloperResponseSchema,
-  gameDeveloperListResponseSchema,
-} from '../schemas/game-developer.schema';
-import type {
-  CreateGameDeveloperDto,
-  UpdateGameDeveloperDto,
-  BulkDeleteGameDeveloperDto,
+  GameDeveloperSchema,
+  type CreateGameDeveloperDto,
+  type UpdateGameDeveloperDto,
+  type BulkDeleteGameDeveloperDto,
 } from '../schemas/game-developer.schema';
 
 @Controller('game-developers')
@@ -41,9 +34,9 @@ export class GameDeveloperController {
   @Post()
   @RouteSchema({
     tags: ['Game Developers'],
-    body: createGameDeveloperSchema,
+    body: GameDeveloperSchema.create(),
     response: {
-      201: gameDeveloperResponseSchema,
+      201: GameDeveloperSchema.response(),
     },
   })
   async create(@Body() createDto: CreateGameDeveloperDto) {
@@ -55,7 +48,7 @@ export class GameDeveloperController {
   @RouteSchema({
     tags: ['Game Developers'],
     response: {
-      200: gameDeveloperListResponseSchema,
+      200: GameDeveloperSchema.list(),
     },
   })
   async findAll() {
@@ -71,9 +64,9 @@ export class GameDeveloperController {
   @Get(':id')
   @RouteSchema({
     tags: ['Game Developers'],
-    params: uuidParamSchema,
+    params: GameDeveloperSchema.uuidParam(),
     response: {
-      200: gameDeveloperResponseSchema,
+      200: GameDeveloperSchema.response(),
     },
   })
   async findOne(@Param('id') id: string) {
@@ -91,10 +84,10 @@ export class GameDeveloperController {
   @Patch(':id')
   @RouteSchema({
     tags: ['Game Developers'],
-    params: uuidParamSchema,
-    body: updateGameDeveloperSchema,
+    params: GameDeveloperSchema.uuidParam(),
+    body: GameDeveloperSchema.update(),
     response: {
-      200: gameDeveloperResponseSchema,
+      200: GameDeveloperSchema.response(),
     },
   })
   async update(@Param('id') id: string, @Body() updateDto: UpdateGameDeveloperDto) {
@@ -114,7 +107,7 @@ export class GameDeveloperController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @RouteSchema({
     tags: ['Game Developers'],
-    body: bulkDeleteGameDeveloperSchema,
+    body: GameDeveloperSchema.bulkDelete(),
   })
   async bulkRemove(@Body() bulkDeleteDto: BulkDeleteGameDeveloperDto) {
     const { ids } = bulkDeleteDto;
@@ -136,7 +129,7 @@ export class GameDeveloperController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @RouteSchema({
     tags: ['Game Developers'],
-    params: uuidParamSchema,
+    params: GameDeveloperSchema.uuidParam(),
   })
   async remove(@Param('id') id: string) {
     const gameDeveloper = await this.gameDeveloperRepository.findOne({
