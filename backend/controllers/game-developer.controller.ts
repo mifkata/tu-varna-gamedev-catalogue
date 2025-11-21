@@ -57,9 +57,13 @@ export class GameDeveloperController {
     },
   })
   async findAll() {
-    return this.gameDeveloperRepository.find({
-      order: { createdAt: 'DESC' },
-    });
+    const developers = await this.gameDeveloperRepository
+      .createQueryBuilder('developer')
+      .loadRelationCountAndMap('developer.gamesCount', 'developer.games')
+      .orderBy('developer.createdAt', 'DESC')
+      .getMany();
+
+    return developers;
   }
 
   @Get(':id')

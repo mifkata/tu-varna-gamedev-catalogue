@@ -58,7 +58,31 @@ export const gameDeveloperResponseSchema = Type.Object(
   { $id: 'GameDeveloperResponse' },
 );
 
-export const gameDeveloperListResponseSchema = Type.Array(gameDeveloperResponseSchema, {
+export const gameDeveloperListItemSchema = Type.Object(
+  {
+    id: Type.String({
+      format: 'uuid',
+      description: 'The unique identifier',
+    }),
+    name: Type.String({
+      description: 'The name of the game developer',
+    }),
+    gamesCount: Type.Number({
+      description: 'The number of games by this developer',
+    }),
+    createdAt: Type.String({
+      format: 'date-time',
+      description: 'Creation timestamp',
+    }),
+    updatedAt: Type.String({
+      format: 'date-time',
+      description: 'Last update timestamp',
+    }),
+  },
+  { $id: 'GameDeveloperListItem' },
+);
+
+export const gameDeveloperListResponseSchema = Type.Array(gameDeveloperListItemSchema, {
   $id: 'GameDeveloperList',
 });
 
@@ -67,3 +91,4 @@ export type UuidParam = Static<typeof uuidParamSchema>;
 export type CreateGameDeveloperDto = Static<typeof createGameDeveloperSchema>;
 export type UpdateGameDeveloperDto = Static<typeof updateGameDeveloperSchema>;
 export type GameDeveloperResponse = Static<typeof gameDeveloperResponseSchema>;
+export type GameDeveloperListItem = Static<typeof gameDeveloperListItemSchema>;

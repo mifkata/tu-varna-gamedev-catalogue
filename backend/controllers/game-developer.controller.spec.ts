@@ -1,4 +1,7 @@
-import { GameDeveloperResponse } from '@backend/schemas/game-developer.schema';
+import {
+  GameDeveloperResponse,
+  GameDeveloperListItem,
+} from '@backend/schemas/game-developer.schema';
 import { TestAgent, TestAppHelper } from '@backend/test/test-app.helper';
 
 describe('/api/game-developers', () => {
@@ -36,12 +39,13 @@ describe('/api/game-developers', () => {
     it('should return an array of game developers', async () => {
       const response = await request.get('/api/game-developers').expect(200);
 
-      const body = response.body as GameDeveloperResponse[];
+      const body = response.body as GameDeveloperListItem[];
       expect(Array.isArray(body)).toBe(true);
       expect(body.length).toBeGreaterThan(0);
       expect(body[0]).toMatchObject({
         id: expect.any(String),
         name: expect.any(String),
+        gamesCount: expect.any(Number),
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       });

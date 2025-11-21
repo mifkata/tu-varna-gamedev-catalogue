@@ -47,6 +47,7 @@ export class BackendBootstrap {
     const swagger = (await import('@fastify/swagger')).default;
     const swaggerUI = (await import('@fastify/swagger-ui')).default;
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
     await fastify.register(swagger as any, {
       openapi: {
         info: {
@@ -58,6 +59,7 @@ export class BackendBootstrap {
       },
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
     await fastify.register(swaggerUI as any, {
       routePrefix: '/api/docs',
     });
