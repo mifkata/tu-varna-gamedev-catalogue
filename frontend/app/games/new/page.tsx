@@ -58,7 +58,7 @@ export default function NewGamePage() {
       setDevelopers(devsData);
       setCategories(catsData);
     } catch (err) {
-      setError('Failed to load data');
+      setError('Неуспешно зареждане на данни');
       console.error('Failed to load data:', err);
     } finally {
       setDataLoading(false);
@@ -78,7 +78,7 @@ export default function NewGamePage() {
       setPrice(game.price.toString());
       setAmount(game.amount.toString());
     } catch (err) {
-      setError('Failed to load game');
+      setError('Неуспешно зареждане на игра');
       console.error('Failed to load game:', err);
     }
   }
@@ -88,47 +88,47 @@ export default function NewGamePage() {
     setError('');
 
     if (!name.trim()) {
-      setError('Name is required');
+      setError('Името е задължително');
       return;
     }
 
     if (!developerId) {
-      setError('Developer is required');
+      setError('Разработчикът е задължителен');
       return;
     }
 
     if (!categoryId) {
-      setError('Category is required');
+      setError('Категорията е задължителна');
       return;
     }
 
     const minCpuNum = parseFloat(minCpu);
     if (isNaN(minCpuNum) || minCpuNum < 0) {
-      setError('Valid minimum CPU is required');
+      setError('Валиден минимален CPU е задължителен');
       return;
     }
 
     const minMemoryNum = parseInt(minMemory, 10);
     if (isNaN(minMemoryNum) || minMemoryNum < 0) {
-      setError('Valid minimum memory is required');
+      setError('Валидна минимална памет е задължителна');
       return;
     }
 
     const releaseYearNum = parseInt(releaseYear, 10);
     if (isNaN(releaseYearNum) || releaseYearNum < 1970 || releaseYearNum > 2100) {
-      setError('Valid release year is required (1970-2100)');
+      setError('Валидна година на издаване е задължителна (1970-2100)');
       return;
     }
 
     const priceNum = parseFloat(price);
     if (isNaN(priceNum) || priceNum < 0) {
-      setError('Valid price is required');
+      setError('Валидна цена е задължителна');
       return;
     }
 
     const amountNum = parseInt(amount, 10);
     if (isNaN(amountNum) || amountNum < 0) {
-      setError('Valid amount is required');
+      setError('Валидно количество е задължително');
       return;
     }
 
@@ -154,7 +154,7 @@ export default function NewGamePage() {
 
       router.push('/games');
     } catch (err) {
-      setError(`Failed to ${isEditMode ? 'update' : 'create'} game. Please try again.`);
+      setError(`Неуспешно ${isEditMode ? 'актуализиране' : 'създаване'} на игра. Моля, опитайте отново.`);
       console.error(`Failed to ${isEditMode ? 'update' : 'create'} game:`, err);
     } finally {
       setLoading(false);
@@ -164,7 +164,7 @@ export default function NewGamePage() {
   if (dataLoading) {
     return (
       <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="text-center">Loading...</div>
+        <div className="text-center">Зареждане...</div>
       </div>
     );
   }
@@ -177,19 +177,19 @@ export default function NewGamePage() {
           className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Games
+          Обратно към игри
         </Link>
       </div>
 
       <div className="bg-card rounded-lg border p-6">
-        <h1 className="text-2xl font-bold mb-6">{isEditMode ? 'Edit Game' : 'Create New Game'}</h1>
+        <h1 className="text-2xl font-bold mb-6">{isEditMode ? 'Редактирай игра' : 'Създай нова игра'}</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Game Name</Label>
+            <Label htmlFor="name">Име на игра</Label>
             <Input
               id="name"
-              placeholder="Enter game name"
+              placeholder="Въведи име на игра"
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={loading}
@@ -198,7 +198,7 @@ export default function NewGamePage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="developer">Developer</Label>
+            <Label htmlFor="developer">Разработчик</Label>
             <select
               id="developer"
               value={developerId}
@@ -207,7 +207,7 @@ export default function NewGamePage() {
               required
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              <option value="">Select a developer</option>
+              <option value="">Избери разработчик</option>
               {developers.map((dev) => (
                 <option key={dev.id} value={dev.id}>
                   {dev.name}
@@ -217,7 +217,7 @@ export default function NewGamePage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
+            <Label htmlFor="category">Категория</Label>
             <select
               id="category"
               value={categoryId}
@@ -226,7 +226,7 @@ export default function NewGamePage() {
               required
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              <option value="">Select a category</option>
+              <option value="">Избери категория</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -237,7 +237,7 @@ export default function NewGamePage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="minCpu">Minimum CPU (GHz)</Label>
+              <Label htmlFor="minCpu">Минимален CPU (GHz)</Label>
               <Input
                 id="minCpu"
                 type="number"
@@ -252,7 +252,7 @@ export default function NewGamePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="minMemory">Minimum Memory (MB)</Label>
+              <Label htmlFor="minMemory">Минимална памет (MB)</Label>
               <Input
                 id="minMemory"
                 type="number"
@@ -267,7 +267,7 @@ export default function NewGamePage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="releaseYear">Release Year</Label>
+            <Label htmlFor="releaseYear">Година на издаване</Label>
             <Input
               id="releaseYear"
               type="number"
@@ -282,7 +282,7 @@ export default function NewGamePage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="price">Price</Label>
+            <Label htmlFor="price">Цена</Label>
             <Input
               id="price"
               type="number"
@@ -297,7 +297,7 @@ export default function NewGamePage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="amount">Amount (Copies Available)</Label>
+            <Label htmlFor="amount">Количество (налични копия)</Label>
             <Input
               id="amount"
               type="number"
@@ -318,7 +318,7 @@ export default function NewGamePage() {
               disabled={loading}
             />
             <Label htmlFor="multiplayer" className="cursor-pointer">
-              Multiplayer support
+              Поддръжка на мултиплейър
             </Label>
           </div>
 
@@ -328,15 +328,15 @@ export default function NewGamePage() {
             <Button type="submit" disabled={loading}>
               {loading
                 ? isEditMode
-                  ? 'Updating...'
-                  : 'Creating...'
+                  ? 'Актуализиране...'
+                  : 'Създаване...'
                 : isEditMode
-                  ? 'Update Game'
-                  : 'Create Game'}
+                  ? 'Актуализирай игра'
+                  : 'Създай игра'}
             </Button>
             <Link href="/games">
               <Button type="button" variant="outline" disabled={loading}>
-                Cancel
+                Откажи
               </Button>
             </Link>
           </div>

@@ -21,7 +21,7 @@ export default function NewGameDeveloperPage() {
     setError('');
 
     if (!name.trim()) {
-      setError('Name is required');
+      setError('Името е задължително');
       return;
     }
 
@@ -30,7 +30,7 @@ export default function NewGameDeveloperPage() {
       await gameDevelopersApi.create({ name: name.trim() });
       router.push('/game-developers');
     } catch (err) {
-      setError('Failed to create game developer. Please try again.');
+      setError('Неуспешно създаване на разработчик. Моля, опитайте отново.');
       console.error('Failed to create developer:', err);
     } finally {
       setLoading(false);
@@ -45,19 +45,19 @@ export default function NewGameDeveloperPage() {
           className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Game Developers
+          Обратно към разработчици
         </Link>
       </div>
 
       <div className="bg-card rounded-lg border p-6">
-        <h1 className="text-2xl font-bold mb-6">Create New Game Developer</h1>
+        <h1 className="text-2xl font-bold mb-6">Създай нов разработчик на игри</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Developer Name</Label>
+            <Label htmlFor="name">Име на разработчик</Label>
             <Input
               id="name"
-              placeholder="Enter developer name"
+              placeholder="Въведи име на разработчик"
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={loading}
@@ -68,11 +68,11 @@ export default function NewGameDeveloperPage() {
 
           <div className="flex items-center gap-4 pt-4">
             <Button type="submit" disabled={loading}>
-              {loading ? 'Creating...' : 'Create Developer'}
+              {loading ? 'Създаване...' : 'Създай разработчик'}
             </Button>
             <Link href="/game-developers">
               <Button type="button" variant="outline" disabled={loading}>
-                Cancel
+                Откажи
               </Button>
             </Link>
           </div>

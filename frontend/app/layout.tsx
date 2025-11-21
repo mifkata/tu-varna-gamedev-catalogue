@@ -4,13 +4,13 @@ import './globals.css';
 import { Navigation } from '@/components/navigation';
 
 export const metadata: Metadata = {
-  title: 'TU Varna GameDev Catalogue',
-  description: 'A catalogue of game development projects from TU Varna',
+  title: 'GameDev Каталог',
+  description: 'Изпитен проект по ООП2 в ТУ-Варна за Каталог на разработчици на видео игри',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="bg">
       <body>
         <Navigation />
         {children}

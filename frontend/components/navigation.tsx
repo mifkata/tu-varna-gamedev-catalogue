@@ -7,9 +7,9 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { href: '/game-developers', label: 'Game Developers' },
-  { href: '/games', label: 'Games' },
-  { href: '/categories', label: 'Categories' },
+  { href: '/game-developers', label: 'Разработчици' },
+  { href: '/games', label: 'Игри' },
+  { href: '/categories', label: 'Категории' },
 ];
 
 export function Navigation() {
@@ -21,7 +21,7 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
             <Gamepad2 className="h-6 w-6" />
-            <span>TU Varna GameDev</span>
+            <span>GameDev Каталог</span>
           </Link>
           <div className="flex items-center gap-6">
             {navItems.map((item) => (

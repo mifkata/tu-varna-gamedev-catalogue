@@ -198,7 +198,7 @@ function GamesPageContent() {
       setEditError('');
     } catch (error) {
       console.error('Failed to load game:', error);
-      setEditError('Failed to load game');
+      setEditError('Неуспешно зареждане на игра');
     }
   }
 
@@ -288,47 +288,47 @@ function GamesPageContent() {
     setEditError('');
 
     if (!editName.trim()) {
-      setEditError('Name is required');
+      setEditError('Името е задължително');
       return;
     }
 
     if (!editDeveloperId) {
-      setEditError('Developer is required');
+      setEditError('Разработчикът е задължителен');
       return;
     }
 
     if (!editCategoryId) {
-      setEditError('Category is required');
+      setEditError('Категорията е задължителна');
       return;
     }
 
     const minCpuNum = parseFloat(editMinCpu);
     if (isNaN(minCpuNum) || minCpuNum < 0) {
-      setEditError('Valid minimum CPU is required');
+      setEditError('Валиден минимален CPU е задължителен');
       return;
     }
 
     const minMemoryNum = parseInt(editMinMemory, 10);
     if (isNaN(minMemoryNum) || minMemoryNum < 0) {
-      setEditError('Valid minimum memory is required');
+      setEditError('Валидна минимална памет е задължителна');
       return;
     }
 
     const releaseYearNum = parseInt(editReleaseYear, 10);
     if (isNaN(releaseYearNum) || releaseYearNum < 1970 || releaseYearNum > 2100) {
-      setEditError('Valid release year is required (1970-2100)');
+      setEditError('Валидна година на издаване е задължителна (1970-2100)');
       return;
     }
 
     const priceNum = parseFloat(editPrice);
     if (isNaN(priceNum) || priceNum < 0) {
-      setEditError('Valid price is required');
+      setEditError('Валидна цена е задължителна');
       return;
     }
 
     const amountNum = parseInt(editAmount, 10);
     if (isNaN(amountNum) || amountNum < 0) {
-      setEditError('Valid amount is required');
+      setEditError('Валидно количество е задължително');
       return;
     }
 
@@ -348,7 +348,7 @@ function GamesPageContent() {
       await loadGames();
       closeEditModal();
     } catch (error) {
-      setEditError('Failed to update game. Please try again.');
+      setEditError('Неуспешно актуализиране на игра. Моля, опитайте отново.');
       console.error('Failed to update game:', error);
     } finally {
       setEditLoading(false);
@@ -358,7 +358,7 @@ function GamesPageContent() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center">Loading...</div>
+        <div className="text-center">Зареждане...</div>
       </div>
     );
   }
@@ -366,18 +366,18 @@ function GamesPageContent() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">Games</h1>
+        <h1 className="text-3xl font-bold">Игри</h1>
         <div className="flex gap-2">
           {selectedIds.size > 0 && (
             <Button variant="destructive" onClick={openBulkDeleteDialog}>
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete Selected ({selectedIds.size})
+              Изтрий избраните ({selectedIds.size})
             </Button>
           )}
           <Link href="/games/new">
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Add Game
+              Добави игра
             </Button>
           </Link>
         </div>
@@ -407,7 +407,7 @@ function GamesPageContent() {
 
       <div className="mb-4">
         <Input
-          placeholder="Filter by name..."
+          placeholder="Филтрирай по име..."
           value={filterText}
           onChange={(e) => setFilterText(e.target.value)}
           className="max-w-sm"
@@ -426,25 +426,25 @@ function GamesPageContent() {
               </TableHead>
               <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('developer')} className="-ml-4">
-                  Developer
+                  Разработчик
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
               <TableHead className="w-full">
                 <Button variant="ghost" onClick={() => handleSort('name')} className="-ml-4">
-                  Name
+                  Име
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
               <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('category')} className="-ml-4">
-                  Category
+                  Категория
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
               <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('releaseYear')} className="-ml-4">
-                  Year
+                  Година
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
@@ -462,30 +462,30 @@ function GamesPageContent() {
               </TableHead>
               <TableHead className="w-1 text-nowrap">
                 <Button variant="ghost" onClick={() => handleSort('price')} className="-ml-4">
-                  Price
+                  Цена
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
               <TableHead className="w-1 text-nowrap">
                 <Button variant="ghost" onClick={() => handleSort('amount')} className="-ml-4">
-                  Amount
+                  Количество
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
               <TableHead className="w-1 text-nowrap">
                 <Button variant="ghost" onClick={() => handleSort('multiplayer')} className="-ml-4">
-                  Multiplayer
+                  Мултиплейър
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-1 text-center">Actions</TableHead>
+              <TableHead className="w-1 text-center">Действия</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredGames.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={11} className="text-center text-muted-foreground">
-                  No games found.
+                  Няма намерени игри.
                 </TableCell>
               </TableRow>
             ) : (
@@ -508,7 +508,7 @@ function GamesPageContent() {
                     {game.developer.name}
                   </TableCell>
                   <TableCell
-                    className="font-medium"
+                    className="font-medium text-nowrap cursor-pointer hover:underline"
                     onClick={(e) => {
                       e.stopPropagation();
                       openEditModal(game.id);
@@ -539,7 +539,7 @@ function GamesPageContent() {
                       addFilterTag('multiplayer', tag, tag);
                     }}
                   >
-                    {game.multiplayer ? 'Yes' : 'No'}
+                    {game.multiplayer ? 'Да' : 'Не'}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
@@ -576,11 +576,11 @@ function GamesPageContent() {
       <Dialog open={editModalOpen} onOpenChange={(open) => !open && closeEditModal()}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Edit Game</DialogTitle>
+            <DialogTitle>Редактирай игра</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleEditSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="edit-name">Game Name</Label>
+              <Label htmlFor="edit-name">Име на игра</Label>
               <Input
                 id="edit-name"
                 value={editName}
@@ -591,7 +591,7 @@ function GamesPageContent() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-developer">Developer</Label>
+              <Label htmlFor="edit-developer">Разработчик</Label>
               <select
                 id="edit-developer"
                 value={editDeveloperId}
@@ -600,7 +600,7 @@ function GamesPageContent() {
                 required
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <option value="">Select a developer</option>
+                <option value="">Избери разработчик</option>
                 {developers.map((dev) => (
                   <option key={dev.id} value={dev.id}>
                     {dev.name}
@@ -610,7 +610,7 @@ function GamesPageContent() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-category">Category</Label>
+              <Label htmlFor="edit-category">Категория</Label>
               <select
                 id="edit-category"
                 value={editCategoryId}
@@ -619,7 +619,7 @@ function GamesPageContent() {
                 required
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <option value="">Select a category</option>
+                <option value="">Избери категория</option>
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.name}
@@ -630,7 +630,7 @@ function GamesPageContent() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="edit-minCpu">Minimum CPU (GHz)</Label>
+                <Label htmlFor="edit-minCpu">Минимален CPU (GHz)</Label>
                 <Input
                   id="edit-minCpu"
                   type="number"
@@ -644,7 +644,7 @@ function GamesPageContent() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="edit-minMemory">Minimum Memory (MB)</Label>
+                <Label htmlFor="edit-minMemory">Минимална памет (MB)</Label>
                 <Input
                   id="edit-minMemory"
                   type="number"
@@ -658,7 +658,7 @@ function GamesPageContent() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-releaseYear">Release Year</Label>
+              <Label htmlFor="edit-releaseYear">Година на издаване</Label>
               <Input
                 id="edit-releaseYear"
                 type="number"
@@ -672,7 +672,7 @@ function GamesPageContent() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-price">Price</Label>
+              <Label htmlFor="edit-price">Цена</Label>
               <Input
                 id="edit-price"
                 type="number"
@@ -686,7 +686,7 @@ function GamesPageContent() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-amount">Amount (Copies Available)</Label>
+              <Label htmlFor="edit-amount">Количество (налични копия)</Label>
               <Input
                 id="edit-amount"
                 type="number"
@@ -706,7 +706,7 @@ function GamesPageContent() {
                 disabled={editLoading}
               />
               <Label htmlFor="edit-multiplayer" className="cursor-pointer">
-                Multiplayer support
+                Поддръжка на мултиплейър
               </Label>
             </div>
 
@@ -719,10 +719,10 @@ function GamesPageContent() {
                 onClick={closeEditModal}
                 disabled={editLoading}
               >
-                Cancel
+                Откажи
               </Button>
               <Button type="submit" disabled={editLoading}>
-                {editLoading ? 'Updating...' : 'Update Game'}
+                {editLoading ? 'Актуализиране...' : 'Актуализирай игра'}
               </Button>
             </DialogFooter>
           </form>
@@ -732,18 +732,18 @@ function GamesPageContent() {
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
+            <DialogTitle>Потвърди изтриването</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete &quot;{gameToDelete?.name}&quot;? This action cannot
-              be undone.
+              Сигурни ли сте, че искате да изтриете &quot;{gameToDelete?.name}&quot;? Това действие
+              не може да бъде отменено.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
+              Откажи
             </Button>
             <Button variant="destructive" onClick={handleDelete}>
-              Delete
+              Изтрий
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -752,18 +752,18 @@ function GamesPageContent() {
       <Dialog open={bulkDeleteDialogOpen} onOpenChange={setBulkDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirm Bulk Deletion</DialogTitle>
+            <DialogTitle>Потвърди масово изтриване</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete {selectedIds.size} game
-              {selectedIds.size === 1 ? '' : 's'}? This action cannot be undone.
+              Сигурни ли сте, че искате да изтриете {selectedIds.size} игр
+              {selectedIds.size === 1 ? 'а' : 'и'}? Това действие не може да бъде отменено.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setBulkDeleteDialogOpen(false)}>
-              Cancel
+              Откажи
             </Button>
             <Button variant="destructive" onClick={handleBulkDelete}>
-              Delete
+              Изтрий
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -774,7 +774,7 @@ function GamesPageContent() {
 
 export default function GamesPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Зареждане...</div>}>
       <GamesPageContent />
     </Suspense>
   );

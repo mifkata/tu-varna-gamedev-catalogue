@@ -21,7 +21,7 @@ export default function NewCategoryPage() {
     setError('');
 
     if (!name.trim()) {
-      setError('Name is required');
+      setError('Името е задължително');
       return;
     }
 
@@ -30,7 +30,7 @@ export default function NewCategoryPage() {
       await categoriesApi.create({ name: name.trim() });
       router.push('/categories');
     } catch (err) {
-      setError('Failed to create category. Please try again.');
+      setError('Неуспешно създаване на категория. Моля, опитайте отново.');
       console.error('Failed to create category:', err);
     } finally {
       setLoading(false);
@@ -45,19 +45,19 @@ export default function NewCategoryPage() {
           className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Categories
+          Обратно към категории
         </Link>
       </div>
 
       <div className="bg-card rounded-lg border p-6">
-        <h1 className="text-2xl font-bold mb-6">Create New Category</h1>
+        <h1 className="text-2xl font-bold mb-6">Създай нова категория</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Category Name</Label>
+            <Label htmlFor="name">Име на категория</Label>
             <Input
               id="name"
-              placeholder="Enter category name"
+              placeholder="Въведи име на категория"
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={loading}
@@ -68,11 +68,11 @@ export default function NewCategoryPage() {
 
           <div className="flex items-center gap-4 pt-4">
             <Button type="submit" disabled={loading}>
-              {loading ? 'Creating...' : 'Create Category'}
+              {loading ? 'Създаване...' : 'Създай категория'}
             </Button>
             <Link href="/categories">
               <Button type="button" variant="outline" disabled={loading}>
-                Cancel
+                Откажи
               </Button>
             </Link>
           </div>

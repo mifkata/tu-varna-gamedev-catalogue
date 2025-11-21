@@ -167,7 +167,7 @@ export default function CategoriesPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center">Loading...</div>
+        <div className="text-center">Зареждане...</div>
       </div>
     );
   }
@@ -175,18 +175,18 @@ export default function CategoriesPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">Categories</h1>
+        <h1 className="text-3xl font-bold">Категории</h1>
         <div className="flex gap-2">
           {selectedIds.size > 0 && (
             <Button variant="destructive" onClick={openBulkDeleteDialog}>
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete Selected ({selectedIds.size})
+              Изтрий избраните ({selectedIds.size})
             </Button>
           )}
           <Link href="/categories/new">
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Add Category
+              Добави категория
             </Button>
           </Link>
         </div>
@@ -194,7 +194,7 @@ export default function CategoriesPage() {
 
       <div className="mb-4">
         <Input
-          placeholder="Filter by name..."
+          placeholder="Филтрирай по име..."
           value={filterText}
           onChange={(e) => setFilterText(e.target.value)}
           className="max-w-sm"
@@ -215,30 +215,30 @@ export default function CategoriesPage() {
               </TableHead>
               <TableHead className="w-full">
                 <Button variant="ghost" onClick={() => handleSort('name')} className="-ml-4">
-                  Name
+                  Име
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
               <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('gamesCount')} className="-ml-4">
-                  Games Count
+                  Брой игри
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
               <TableHead className="w-1">
                 <Button variant="ghost" onClick={() => handleSort('createdAt')} className="-ml-4">
-                  Created At
+                  Създадено на
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="w-1 text-right">Actions</TableHead>
+              <TableHead className="w-1 text-right">Действия</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredCategories.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={5} className="text-center text-muted-foreground">
-                  No categories found.
+                  Няма намерени категории.
                 </TableCell>
               </TableRow>
             ) : (
@@ -342,18 +342,18 @@ export default function CategoriesPage() {
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
+            <DialogTitle>Потвърди изтриването</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete &quot;{categoryToDelete?.name}&quot;? This action
-              cannot be undone.
+              Сигурни ли сте, че искате да изтриете &quot;{categoryToDelete?.name}&quot;? Това действие
+              не може да бъде отменено.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
+              Откажи
             </Button>
             <Button variant="destructive" onClick={handleDelete}>
-              Delete
+              Изтрий
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -362,18 +362,18 @@ export default function CategoriesPage() {
       <Dialog open={bulkDeleteDialogOpen} onOpenChange={setBulkDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirm Bulk Deletion</DialogTitle>
+            <DialogTitle>Потвърди масово изтриване</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete {selectedIds.size} categor
-              {selectedIds.size === 1 ? 'y' : 'ies'}? This action cannot be undone.
+              Сигурни ли сте, че искате да изтриете {selectedIds.size} категори
+              {selectedIds.size === 1 ? 'я' : 'и'}? Това действие не може да бъде отменено.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setBulkDeleteDialogOpen(false)}>
-              Cancel
+              Откажи
             </Button>
             <Button variant="destructive" onClick={handleBulkDelete}>
-              Delete
+              Изтрий
             </Button>
           </DialogFooter>
         </DialogContent>
