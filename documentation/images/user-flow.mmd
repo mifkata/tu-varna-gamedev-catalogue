@@ -1,0 +1,16 @@
+graph TD
+    A[Начало] --> B[1. Добавяне на разработчици]
+    B --> C[2. Добавяне на категории]
+    C --> D[3. Добавяне на игри]
+    D --> E{Редактиране?}
+    E -->|Да| F[Inline редактиране или Modal]
+    E -->|Не| G[Филтриране и търсене]
+    F --> G
+    G --> H[Изтриване на записи]
+    H --> I[Край]
+
+    style B fill:#e3f2fd
+    style C fill:#e3f2fd
+    style D fill:#c8e6c9
+    style F fill:#fff9c4
+    style H fill:#ffcdd2

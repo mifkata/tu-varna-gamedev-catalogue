@@ -1,0 +1,32 @@
+erDiagram
+    GAME_DEVELOPERS ||--o{ GAMES : develops
+    CATEGORIES ||--o{ GAMES : categorizes
+
+    GAME_DEVELOPERS {
+        uuid id PK
+        varchar name UK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CATEGORIES {
+        uuid id PK
+        varchar name UK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    GAMES {
+        uuid id PK
+        uuid developer_id FK
+        uuid category_id FK
+        varchar name
+        decimal min_cpu
+        integer min_memory
+        boolean multiplayer
+        integer release_year
+        decimal price
+        integer amount
+        timestamp created_at
+        timestamp updated_at
+    }
