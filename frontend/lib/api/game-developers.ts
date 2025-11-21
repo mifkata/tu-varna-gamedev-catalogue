@@ -50,4 +50,13 @@ export const gameDevelopersApi = {
     });
     if (!res.ok) throw new Error('Failed to delete game developer');
   },
+
+  async bulkDelete(ids: string[]): Promise<void> {
+    const res = await fetch(`${API_URL}/api/game-developers/bulk-delete`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids }),
+    });
+    if (!res.ok) throw new Error('Failed to bulk delete game developers');
+  },
 };

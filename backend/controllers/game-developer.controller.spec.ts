@@ -94,6 +94,62 @@ describe('/api/game-developers', () => {
     });
   });
 
+  describe('POST /api/game-developers/bulk-delete', () => {
+    let developer1Id: string;
+    let developer2Id: string;
+    let developer3Id: string;
+
+    beforeAll(async () => {
+      const dev1 = await request
+        .post('/api/game-developers')
+        .send({ name: 'Bulk Test Developer 1' })
+        .expect(201);
+      developer1Id = dev1.body.id;
+
+      const dev2 = await request
+        .post('/api/game-developers')
+        .send({ name: 'Bulk Test Developer 2' })
+        .expect(201);
+      developer2Id = dev2.body.id;
+
+      const dev3 = await request
+        .post('/api/game-developers')
+        .send({ name: 'Bulk Test Developer 3' })
+        .expect(201);
+      developer3Id = dev3.body.id;
+    });
+
+    it('should delete multiple game developers', async () => {
+      await request
+        .post('/api/game-developers/bulk-delete')
+        .send({ ids: [developer1Id, developer2Id] })
+        .expect(204);
+
+      await request.get(`/api/game-developers/${developer1Id}`).expect(404);
+      await request.get(`/api/game-developers/${developer2Id}`).expect(404);
+      await request.get(`/api/game-developers/${developer3Id}`).expect(200);
+    });
+
+    it('should return 404 when one or more game developers not found', async () => {
+      await request
+        .post('/api/game-developers/bulk-delete')
+        .send({ ids: ['550e8400-e29b-41d4-a716-446655440000', developer3Id] })
+        .expect(404);
+    });
+
+    it('should return 400 when ids array is empty', async () => {
+      await request.post('/api/game-developers/bulk-delete').send({ ids: [] }).expect(400);
+    });
+
+    afterAll(async () => {
+      try {
+        await request.delete(`/api/game-developers/${developer3Id}`);
+      } catch (e) {
+        // ignore
+      }
+    });
+  });
+
   describe('DELETE /api/game-developers/:id', () => {
     it('should delete a game developer', async () => {
       await request.delete(`/api/game-developers/${createdDeveloperId}`).expect(204);

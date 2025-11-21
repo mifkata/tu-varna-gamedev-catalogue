@@ -21,12 +21,14 @@ import {
   uuidParamSchema,
   createGameDeveloperSchema,
   updateGameDeveloperSchema,
+  bulkDeleteGameDeveloperSchema,
   gameDeveloperResponseSchema,
   gameDeveloperListResponseSchema,
 } from '../schemas/game-developer.schema';
 import type {
   CreateGameDeveloperDto,
   UpdateGameDeveloperDto,
+  BulkDeleteGameDeveloperDto,
 } from '../schemas/game-developer.schema';
 
 @Controller('game-developers')
@@ -106,6 +108,28 @@ export class GameDeveloperController {
 
     Object.assign(gameDeveloper, updateDto);
     return this.gameDeveloperRepository.save(gameDeveloper);
+  }
+
+  @Post('bulk-delete')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @RouteSchema({
+    tags: ['Game Developers'],
+    body: bulkDeleteGameDeveloperSchema,
+  })
+  async bulkRemove(@Body() bulkDeleteDto: BulkDeleteGameDeveloperDto) {
+    const { ids } = bulkDeleteDto;
+
+    const gameDevelopers = await this.gameDeveloperRepository.findByIds(ids);
+
+    if (gameDevelopers.length !== ids.length) {
+      const foundIds = gameDevelopers.map((dev) => dev.id);
+      const missingIds = ids.filter((id) => !foundIds.includes(id));
+      throw new NotFoundException(
+        `Game developers with IDs ${missingIds.join(', ')} not found`,
+      );
+    }
+
+    await this.gameDeveloperRepository.remove(gameDevelopers);
   }
 
   @Delete(':id')

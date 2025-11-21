@@ -36,6 +36,22 @@ export const updateGameDeveloperSchema = Type.Object(
   { $id: 'UpdateGameDeveloper' },
 );
 
+export const bulkDeleteGameDeveloperSchema = Type.Object(
+  {
+    ids: Type.Array(
+      Type.String({
+        format: 'uuid',
+        description: 'UUID of a game developer to delete',
+      }),
+      {
+        minItems: 1,
+        description: 'Array of game developer IDs to delete',
+      },
+    ),
+  },
+  { $id: 'BulkDeleteGameDeveloper' },
+);
+
 // Response schemas
 export const gameDeveloperResponseSchema = Type.Object(
   {
@@ -90,5 +106,6 @@ export const gameDeveloperListResponseSchema = Type.Array(gameDeveloperListItemS
 export type UuidParam = Static<typeof uuidParamSchema>;
 export type CreateGameDeveloperDto = Static<typeof createGameDeveloperSchema>;
 export type UpdateGameDeveloperDto = Static<typeof updateGameDeveloperSchema>;
+export type BulkDeleteGameDeveloperDto = Static<typeof bulkDeleteGameDeveloperSchema>;
 export type GameDeveloperResponse = Static<typeof gameDeveloperResponseSchema>;
 export type GameDeveloperListItem = Static<typeof gameDeveloperListItemSchema>;

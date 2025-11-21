@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Dialog,
   DialogContent,
@@ -39,6 +40,8 @@ export default function GameDevelopersPage() {
   const [developerToDelete, setDeveloperToDelete] = useState<GameDeveloperListItem | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingName, setEditingName] = useState('');
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
     loadDevelopers();
@@ -128,6 +131,39 @@ export default function GameDevelopersPage() {
     }
   }
 
+  function toggleSelectAll() {
+    if (selectedIds.size === filteredDevelopers.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filteredDevelopers.map((dev) => dev.id)));
+    }
+  }
+
+  function toggleSelectOne(id: string) {
+    const newSelectedIds = new Set(selectedIds);
+    if (newSelectedIds.has(id)) {
+      newSelectedIds.delete(id);
+    } else {
+      newSelectedIds.add(id);
+    }
+    setSelectedIds(newSelectedIds);
+  }
+
+  function openBulkDeleteDialog() {
+    setBulkDeleteDialogOpen(true);
+  }
+
+  async function handleBulkDelete() {
+    try {
+      await gameDevelopersApi.bulkDelete(Array.from(selectedIds));
+      await loadDevelopers();
+      setSelectedIds(new Set());
+      setBulkDeleteDialogOpen(false);
+    } catch (error) {
+      console.error('Failed to bulk delete developers:', error);
+    }
+  }
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -140,12 +176,20 @@ export default function GameDevelopersPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Game Developers</h1>
-        <Link href="/game-developers/new">
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            Add Developer
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          {selectedIds.size > 0 && (
+            <Button variant="destructive" onClick={openBulkDeleteDialog}>
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete Selected ({selectedIds.size})
+            </Button>
+          )}
+          <Link href="/game-developers/new">
+            <Button>
+              <Plus className="mr-2 h-4 w-4" />
+              Add Developer
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="mb-4">
@@ -161,6 +205,15 @@ export default function GameDevelopersPage() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-[50px]">
+                <Checkbox
+                  checked={
+                    filteredDevelopers.length > 0 &&
+                    selectedIds.size === filteredDevelopers.length
+                  }
+                  onCheckedChange={toggleSelectAll}
+                />
+              </TableHead>
               <TableHead>
                 <Button variant="ghost" onClick={() => handleSort('name')} className="-ml-4">
                   Name
@@ -185,13 +238,19 @@ export default function GameDevelopersPage() {
           <TableBody>
             {filteredDevelopers.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center text-muted-foreground">
+                <TableCell colSpan={5} className="text-center text-muted-foreground">
                   No game developers found.
                 </TableCell>
               </TableRow>
             ) : (
               filteredDevelopers.map((developer) => (
                 <TableRow key={developer.id}>
+                  <TableCell>
+                    <Checkbox
+                      checked={selectedIds.has(developer.id)}
+                      onCheckedChange={() => toggleSelectOne(developer.id)}
+                    />
+                  </TableCell>
                   <TableCell>
                     {editingId === developer.id ? (
                       <div className="flex items-center gap-2">
@@ -268,6 +327,26 @@ export default function GameDevelopersPage() {
               Cancel
             </Button>
             <Button variant="destructive" onClick={handleDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={bulkDeleteDialogOpen} onOpenChange={setBulkDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Bulk Deletion</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete {selectedIds.size} game developer
+              {selectedIds.size === 1 ? '' : 's'}? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setBulkDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleBulkDelete}>
               Delete
             </Button>
           </DialogFooter>
