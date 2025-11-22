@@ -1,30 +1,67 @@
 # TU Varna GameDev Catalogue
 
-A catalogue of game development companies built with NestJS, Next.js, and PostgreSQL.
+> A comprehensive game development catalogue management system built as a course project for Technical University of Varna
+
+## About
+
+This is a full-stack web application for managing a catalogue of game developers, games and categories The project demonstrates modern web development practices using NestJS for the backend, Next.js for the frontend, and PostgreSQL for data persistence.
+
+## Features
+
+- **Game Developer Management**: Create, read, update, and delete game development companies
+- **Game Catalogue**: Comprehensive game database with metadata (title, release year, publisher)
+- **Category System**: Organize games by genres (RPG, Action-Adventure, Shooter, etc.)
+- **Inventory Tracking**: Manage stock levels and pricing for each game
+- **RESTful API**: Well-documented API with Swagger/OpenAPI support
+- **Database Migrations**: Version-controlled database schema changes with TypeORM
+- **Seed Data**: Pre-populated database with 30+ games from major developers
+- **Modern UI**: Responsive interface built with React 19 and Tailwind CSS
+- **Type Safety**: Full TypeScript implementation across frontend and backend
 
 ## Tech Stack
 
-- **Backend**: NestJS with Fastify
-- **Frontend**: Next.js 15 with React 19
+### Backend
+- **Framework**: NestJS 11 with Fastify
 - **Database**: PostgreSQL 16
 - **ORM**: TypeORM
-- **Package Manager**: pnpm
+- **Validation**: TypeBox schemas
+- **API Documentation**: Swagger/OpenAPI
+
+### Frontend
+- **Framework**: Next.js 15 with React 19
+- **Styling**: Tailwind CSS 4
+- **UI Components**: Radix UI primitives
+- **Icons**: Lucide React
+
+### Development
+- **Language**: TypeScript 5
+- **Package Manager**: pnpm 8
+- **Testing**: Jest
+- **Code Quality**: ESLint, Prettier
+- **Containerization**: Docker & Docker Compose
 
 ## Prerequisites
 
-- Node.js >= 18.0.0
-- pnpm >= 8.0.0
-- Docker and Docker Compose (for local database)
+- **Node.js** >= 18.0.0
+- **pnpm** >= 8.0.0
+- **Docker** (for local database)
 
 ## Quick Start
 
-### 1. Install Dependencies
+### 1. Clone the Repository
+
+```bash
+git clone git@github.com:mifkata/tu-varna-gamedev-catalogue.git
+cd tu-varna-gamedev-catalogue
+```
+
+### 2. Install Dependencies
 
 ```bash
 pnpm install
 ```
 
-### 2. Configure Environment
+### 3. Configure Environment
 
 Copy the example environment file and configure it:
 
@@ -34,19 +71,19 @@ cp .env.example .env
 
 Edit `.env` as needed. Default values work for local development.
 
-### 3. Start Database
+### 4. Start Database
 
 Start PostgreSQL and pgAdmin using Docker Compose:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This starts:
-- PostgreSQL on port 5432
-- pgAdmin on port 5050 (http://localhost:5050)
+- **PostgreSQL** on port `5432`
+- **pgAdmin** on port `5050` (http://localhost:5050)
 
-### 4. Run Migrations
+### 5. Run Migrations
 
 Apply database migrations:
 
@@ -54,7 +91,7 @@ Apply database migrations:
 pnpm migration:run
 ```
 
-### 5. Seed Database (Optional)
+### 6. Seed Database (Optional)
 
 Populate the database with sample data:
 
@@ -68,15 +105,70 @@ This seeds the database with realistic game catalogue data including:
 - **30 Games**: Including classics like Half-Life (1998) and modern titles like Elden Ring (2022)
 - **Inventory Records**: With realistic pricing in EUR and stock levels
 
-### 6. Start Development Server
+### 7. Start Development Server
 
 ```bash
 pnpm start:dev
 ```
 
 The application will be available at:
-- Backend API: http://localhost:3000/api
-- Frontend: http://localhost:3000
+- **Backend API**: http://localhost:3000/api
+- **API Documentation**: http://localhost:3000/api/docs (Swagger UI)
+- **Frontend**: http://localhost:3000
+
+## Documentation
+
+For detailed project documentation including architecture, database schema, and API specifications, see:
+- [Project Documentation (PDF)](./DOCUMENTATION.pdf)
+- [Detailed Documentation](./documentation/README.md) (Bulgarian)
+
+### Database Schema
+
+```mermaid
+erDiagram
+    GAME_DEVELOPERS ||--o{ GAMES : develops
+    CATEGORIES ||--o{ GAMES : categorizes
+
+    GAME_DEVELOPERS {
+        uuid id PK
+        varchar name UK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CATEGORIES {
+        uuid id PK
+        varchar name UK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    GAMES {
+        uuid id PK
+        uuid developer_id FK
+        uuid category_id FK
+        varchar name
+        decimal min_cpu
+        integer min_memory
+        boolean multiplayer
+        integer release_year
+        decimal price
+        integer amount
+        timestamp created_at
+        timestamp updated_at
+    }
+
+```
+
+### API Endpoints
+
+The application provides RESTful APIs for:
+- **Game Developers** (`/api/game-developers`)
+- **Games** (`/api/games`)
+- **Categories** (`/api/categories`)
+- **Health Check** (`/api/health`)
+
+For complete API documentation with request/response examples, visit the Swagger UI at http://localhost:3000/api/docs when the application is running.
 
 ## Available Commands
 
@@ -104,6 +196,7 @@ The application will be available at:
 | `pnpm migration:generate <name>` | Generate a new migration based on entity changes |
 | `pnpm migration:run` | Run pending migrations |
 | `pnpm migration:revert` | Revert the last migration |
+| `pnpm migration:status` | Show migration status |
 | `pnpm seed` | Populate database with sample game catalogue data |
 
 **Example:**
@@ -111,7 +204,7 @@ The application will be available at:
 pnpm migration:generate migrations/AddUserTable
 ```
 
-**Note on seeding:** The `pnpm seed` command will clear existing data and populate the database with 30 games from 10 major developers, along with categories and inventory records. Use this for development and testing purposes.
+**Note on seeding:** The `pnpm seed` command will clear existing data and populate the database with 30 games from 10 major developers, along with categories and inventory records. Use this for development and testing purposes only.
 
 ### Testing
 
@@ -137,16 +230,23 @@ pnpm migration:generate migrations/AddUserTable
 ```
 .
 ├── backend/
-│   ├── entities/      # TypeORM database entities
-│   ├── seeds/         # Database seed files
-│   ├── controllers/   # API route controllers
-│   └── ...
-├── frontend/          # Next.js frontend application
-├── config/            # Configuration files (see config/README.md)
-├── migrations/        # TypeORM database migrations
-├── dist/              # Compiled production files
-├── .data/             # Docker volume for PostgreSQL data
-└── docker-compose.yml # Docker services configuration
+│   ├── entities/          # TypeORM database entities
+│   ├── controllers/       # API route controllers
+│   ├── schemas/           # TypeBox validation schemas
+│   ├── seeds/             # Database seed files
+│   ├── decorators/        # Custom decorators
+│   └── main.ts            # Application entry point
+├── frontend/
+│   ├── app/               # Next.js app directory
+│   ├── components/        # React components
+│   └── lib/               # Utility functions
+├── config/                # Configuration files (see config/README.md)
+├── migrations/            # TypeORM database migrations
+├── documentation/         # Detailed project documentation (Bulgarian)
+├── dist/                  # Compiled production files
+├── .data/                 # Docker volume for PostgreSQL data
+├── docker compose.yml     # Docker services configuration
+└── DOCUMENTATION.pdf      # Complete project documentation
 ```
 
 ## Configuration
@@ -195,7 +295,7 @@ If port 3000 or 5432 is already in use:
 # Change PORT in .env
 PORT=3001
 
-# Or change DB_PORT in .env and docker-compose.yml
+# Or change DB_PORT in .env and docker compose.yml
 DB_PORT=5433
 ```
 
@@ -203,25 +303,25 @@ DB_PORT=5433
 
 **Check if PostgreSQL is running:**
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 **Restart database:**
 ```bash
-docker-compose restart postgres
+docker compose restart postgres
 ```
 
 **View database logs:**
 ```bash
-docker-compose logs postgres
+docker compose logs postgres
 ```
 
 ### Migration Errors
 
 **Reset database (⚠️ destroys all data):**
 ```bash
-docker-compose down -v
-docker-compose up -d
+docker compose down -v
+docker compose up -d
 pnpm migration:run
 pnpm seed  # Optional: reseed with sample data
 ```
@@ -266,65 +366,6 @@ pnpm --version
 npm install -g pnpm@latest
 ```
 
-## Development Workflow
-
-### Adding a New Feature
-
-1. Create a new branch
-2. Make changes to backend/frontend
-3. Generate migration if database schema changed:
-   ```bash
-   pnpm migration:generate migrations/FeatureName
-   ```
-4. Run tests: `pnpm test`
-5. Run linter: `pnpm lint:fix`
-6. Commit and push
-
-### Database Schema Changes
-
-1. Modify TypeORM entities in `backend/entities/`
-2. Generate migration:
-   ```bash
-   pnpm migration:generate migrations/DescriptiveChangeName
-   ```
-3. Review generated migration in `migrations/`
-4. Apply migration:
-   ```bash
-   pnpm migration:run
-   ```
-5. Update seed data in `backend/seeds/seed.ts` if needed
-6. Reseed database (optional):
-   ```bash
-   pnpm seed
-   ```
-
-## Production Deployment
-
-1. Set environment variables:
-   ```bash
-   NODE_ENV=production
-   DATABASE_URL=postgresql://user:pass@host:5432/db
-   ```
-
-2. Build application:
-   ```bash
-   pnpm build
-   ```
-
-3. Run migrations:
-   ```bash
-   pnpm migration:run
-   ```
-
-4. Start server:
-   ```bash
-   pnpm start:prod
-   ```
-
-**Important:**
-- Never use `synchronize: true` in production. Always use migrations.
-- **Do not** run `pnpm seed` in production - seed data is for development/testing only.
-
 ## License
 
-Unlicensed project.
+This project is created for educational purposes as a course assignment for the Technical University of Varna. It is provided as-is without any specific license restrictions.
